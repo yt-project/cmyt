@@ -18,8 +18,10 @@ Matplotlib colormaps from the yt project !
 
 The following colormaps are availabe
 
-<a href="https://github.com/yt-project/cmyt">
-<img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview.png" width="800"></a>
+<p align="center">
+    <a href="https://github.com/yt-project/cmyt">
+    <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview.png" width="800"></a>
+</p>
 
 ## Installation
 :warning: the package is pending publication on PyPI. In the near future, the
@@ -55,9 +57,10 @@ ax.set(aspect="equal")
 im = ax.pcolormesh(x, y, z+noise, cmap="cmyt.arbre", shading="flat")
 fig.colorbar(im, ax=ax)
 ```
-<a href="https://github.com/yt-project/cmyt">
-<img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/demo.png" width="400"></a>
-
+<p align="center">
+    <a href="https://github.com/yt-project/cmyt">
+    <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/demo.png" width="400"></a>
+</p>
 
 ```python
 # alternatively, cmyt maps can also be imported as objects
@@ -68,5 +71,7 @@ ax.set(aspect="equal")
 im = ax.contourf(x, y, z+noise, cmap=pastel)
 fig.colorbar(im, ax=ax)
 ```
-<a href="https://github.com/yt-project/cmyt">
-<img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/demo_alt.png" width="400"></a>
+<p align="center">
+    <a href="https://github.com/yt-project/cmyt">
+    <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/demo_alt.png" width="400"></a>
+</p>
