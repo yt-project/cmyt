@@ -21,4 +21,4 @@ combine_as_imports = true
 filterwarnings = [
     "error",
 ]
-addopts = "--doctest-modules"
+addopts = "--doctest-modules --mpl"
