@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 3 * * *'
 
 jobs:
   tests:
@@ -15,6 +17,7 @@ jobs:
           windows-latest,
         ]
         python-version: [
+          "3.6",
           "3.7",
           "3.8",
           "3.9",
