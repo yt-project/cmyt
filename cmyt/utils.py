@@ -43,10 +43,18 @@ def prefix_name(name: str) -> str:
 
 
 def unprefix_name(name: str) -> str:
+    """
+    Examples
+    --------
+    >>> unprefix_name("cmyt.arbre")
+    'arbre'
+    >>> unprefix_name("arbre")
+    'arbre'
+    """
     if sys.version_info < (3, 9):
         if name.startswith(_CMYT_PREFIX):
-            return name
-        return name[len(_CMYT_PREFIX) :]
+            return name[len(_CMYT_PREFIX) :]
+        return name
     return name.removeprefix(_CMYT_PREFIX)
 
 
