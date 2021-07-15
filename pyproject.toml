@@ -1,0 +1,23 @@
+[build-system]
+requires = [
+  "setuptools >= 40.9.0",
+  "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = [
+  'py37',
+  'py38',
+  'py39',
+]
+
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+]

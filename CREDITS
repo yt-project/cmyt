@@ -1,0 +1,11 @@
+cmyt is a collection of colormaps originally created within the main Yt package.
+
+- "algae" was created by Britton Smith, and historically known as "bds_highcontrast"
+- "arbre" was created by Nathan Goldbaum.
+- "dusk" was created by Cameron Hummels.
+- "kelp" was created by John ZuHone.
+- "pastel" was designed by Tune Kamae and ported to yt by Matthew Turk. It is historically known as under the name "kamae".
+- "octarine" was created by Matthew Turk.
+- "xray" is a variant of a colormap commonly used for X-ray observations, contributed by Maxim Markevitch, and historically known as "purple_mm".
+
+cmyt was proposed and implemented as a separate package by Clément Robert.
