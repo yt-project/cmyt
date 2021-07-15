@@ -1,7 +1,7 @@
 # cmyt
 
-[![PyPI](https://img.shields.io/pypi/v/cmyt)](https://pypi.org/project/cmyt)
-[![Supported Python Versions](https://img.shields.io/pypi/pyversions/cmyt)](https://pypi.org/project/cmyt/)
+[![PyPI](https://img.shields.io/pypi/v/cmyt.svg?logo=pypi&logoColor=white&label=PyPI)](https://pypi.org/project/cmyt)
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/cmyt?logo=python&logoColor=white&label=Python)](https://pypi.org/project/cmyt/)
 
 [![CI](https://github.com/yt-project/cmyt/actions/workflows/ci.yml/badge.svg)](https://github.com/yt-project/cmyt/actions/workflows/ci.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/yt-project/cmyt/main.svg)](https://results.pre-commit.ci/latest/github/yt-project/cmyt/main)
@@ -17,7 +17,7 @@ Matplotlib colormaps from the yt project !
 
 ## Colormaps overview
 
-The following colormaps, as well as their respective reversed (`*_r`) versions are availabe
+The following colormaps, as well as their respective reversed (`*_r`) versions are available
 
 <p align="center">
     <a href="https://github.com/yt-project/cmyt">
@@ -25,14 +25,9 @@ The following colormaps, as well as their respective reversed (`*_r`) versions a
 </p>
 
 ## Installation
-:warning: the package is pending publication on PyPI. In the near future, the
-recommended installation method _will be_
+
 ```shell
 python -m pip install cmyt
-```
-For now, you can install from the repo with
-```shell
-python -m pip install git+https://github.com/yt-project/cmyt.git
 ```
 
 ## Usage
