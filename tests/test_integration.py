@@ -1,5 +1,3 @@
-import sys
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
@@ -31,10 +29,6 @@ def test_from_str(name, random_2D_noise):
 
 
 @mpl_compare
-@pytest.mark.skipif(
-    sys.version_info < (3, 9),
-    reason="can't populate the module programatically by updating globals() under Python 3.9",
-)
 @pytest.mark.parametrize("name", cmyt_cmaps)
 def test_from_obj(name, random_2D_noise):
     fig, axes = plt.subplots(ncols=2, figsize=(4, 8))
