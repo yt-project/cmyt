@@ -52,7 +52,7 @@ fig, ax = plt.subplots()
 ax.set(aspect="equal")
 
 # now we can refer to cmyt colormaps as strings
-im = ax.pcolormesh(x, y, z+noise, cmap="cmyt.arbre")
+im = ax.pcolormesh(x, y, z+noise, cmap="cmyt.arbre", shading="flat")
 fig.colorbar(im, ax=ax)
 ```
 <a href="https://github.com/yt-project/cmyt">
