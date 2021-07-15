@@ -1,4 +1,3 @@
-import sys
 from importlib import import_module
 
 import numpy as np
@@ -29,11 +28,8 @@ for name in cmyt_cmaps:
         )
     cmap, cmap_r = register_colormap(name, data)
 
-    if sys.version_info < (3, 9):
-        continue
-
     globals()[cmap.name] = cmap
     globals()[cmap_r.name] = cmap_r
 
-if sys.version_info >= (3, 9):
-    __all__ = tuple(cmyt_cmaps) + tuple(f"{name}_r" for name in cmyt_cmaps)
+
+__all__ = tuple(cmyt_cmaps) + tuple(f"{name}_r" for name in cmyt_cmaps)
