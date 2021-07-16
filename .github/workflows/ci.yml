@@ -61,10 +61,11 @@ jobs:
         python tests/scripts/hardpin_minimal_dependencies.py
         python -m pip install -e .[dev]
     - name: Run test suite
-      run: pytest --mpl-results-path=test_results
+      run: |
+        export MPLBACKEND=Agg
+        pytest --mpl-results-path=test_results
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
         name: test_results
         path: test_results/
-      run: pytest
