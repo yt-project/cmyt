@@ -6,8 +6,9 @@ import cmyt
 from cmyt.utils import cmyt_cmaps, prefix_name
 
 mpl_compare = pytest.mark.mpl_image_compare(
-    savefig_kwargs={"bbox_inches": "tight", "dpi": 80},
+    savefig_kwargs={"bbox_inches": "tight"},
     style="default",
+    tolerance=10,
 )
 
 
