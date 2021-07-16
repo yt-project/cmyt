@@ -1,3 +1,4 @@
+import os
 import sys
 from typing import Dict, Iterable, List, Optional, Tuple
 
@@ -126,6 +127,6 @@ def create_cmap_overview(
         ax.margins(0, 0)
 
     if filename is not None:
-        fig.savefig(filename, dpi=100, facecolor="gray")
+        fig.savefig(os.fspath(filename), dpi=100, facecolor="gray")
 
     return fig
