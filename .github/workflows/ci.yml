@@ -37,7 +37,7 @@ jobs:
         python -m pip install --upgrade pip
         # install wheel for experimental job (Python 3.10)
         python -m pip install --upgrade wheel
-        python -m pip install --pre -e .[dev]
+        python -m pip install --pre .[dev]
     - name: Run test suite
       run: pytest --mpl-results-path=test_results
     - uses: actions/upload-artifact@v2
