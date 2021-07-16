@@ -45,3 +45,27 @@ jobs:
       with:
         name: test_results
         path: test_results/
+
+  minimal-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Source
+      uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+    - name: Setup package
+      run: |
+        python -m pip install --upgrade pip
+        python tests/scripts/hardpin_minimal_dependencies.py
+        python -m pip install -e .[dev]
+    - name: Run test suite
+      run: |
+        export MPLBACKEND=Agg
+        pytest --mpl-results-path=test_results
+    - uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: test_results
+        path: test_results/
