@@ -39,4 +39,9 @@ jobs:
         python -m pip install --upgrade wheel
         python -m pip install --pre -e .[dev]
     - name: Run test suite
-      run: pytest
+      run: pytest --mpl-results-path=test_results
+    - uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: test_results
+        path: test_results/
