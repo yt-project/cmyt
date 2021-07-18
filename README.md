@@ -71,3 +71,23 @@ fig.colorbar(im, ax=ax)
 </p>
 
 A gallery of comparable examples using all colormaps from cmyt is available [in the test directory](https://github.com/yt-project/cmyt/tree/main/tests/baseline).
+
+
+## About versionning
+
+cmyt uses semantic versioning as defined by https://semver.org.
+
+In practice this means that new colormaps may be added in minor patches, and any
+backward incompatible change to existing colormaps will happen as a major
+change. Likewise, adding support for new Python/Matplotlib versions will be
+considered minor changes, while droping support for EOL Python/Matplotlib
+version will be considered major. If you're developing a library that depends on
+cmyt, we recommend to set an explicit upper limit as well as a minimal one in
+your requirements as for instance
+```
+cmyt >= 0.1.1, < 1.0.0
+```
+with the minimal required version pointing to the e.g. the last colormap
+addition your need, and the upper limit preventing your CI to upgrade to a major
+change without your knowing. Also note that only the top level of the package is
+considered public API.
