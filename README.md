@@ -19,9 +19,19 @@ Matplotlib colormaps from the yt project !
 
 The following colormaps, as well as their respective reversed (`*_r`) versions are available
 
+### Perceptually uniform sequential colormaps
 <p align="center">
-    <a href="https://github.com/yt-project/cmyt">
-    <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview.png" width="800"></a>
+    <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview_perceptually_uniform.png" width="800"></a>
+</p>
+
+### Monochromatic sequential colormaps
+<p align="center">
+    <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview_pixel.png" width="800"></a>
+</p>
+
+# Miscellaneous
+<p align="center">
+    <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview_misc.png" width="800"></a>
 </p>
 
 ## Installation

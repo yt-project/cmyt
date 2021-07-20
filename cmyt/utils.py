@@ -4,9 +4,12 @@ from typing import Dict, Iterable, List, Optional, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
+from colorspacious import cspace_converter
+from matplotlib import __version__ as mpl_version
 from matplotlib.cm import register_cmap as register_cmap_mpl
 from matplotlib.colors import LinearSegmentedColormap
 from more_itertools import always_iterable
+from packaging.version import parse as parse_version
 
 # type aliases
 if sys.version_info >= (3, 8):
@@ -80,8 +83,40 @@ def register_colormap(
     return cmap, cmap_r
 
 
+graySCALE_CONVERSION_SPACE = "JCh"
+_sRGB1_to_JCh = cspace_converter("sRGB1", graySCALE_CONVERSION_SPACE)
+_JCh_to_sRGB1 = cspace_converter(graySCALE_CONVERSION_SPACE, "sRGB1")
+
+
+def to_grayscale(sRGB1):
+    # this is adapted from viscm 0.8
+    JCh = _sRGB1_to_JCh(sRGB1)
+    JCh[..., 1] = 0
+    return np.clip(_JCh_to_sRGB1(JCh), 0, 1)
+
+
+def show_cmap(ax, rgb):
+    # this is adapted from viscm 0.8
+    ax.imshow(rgb[np.newaxis, ...], aspect="auto")
+
+
+def get_rgb(cmap):
+    # this is adapted from viscm 0.8
+    from matplotlib.colors import ListedColormap
+
+    if isinstance(cmap, ListedColormap) and cmap.N >= 100:
+        RGB = np.asarray(cmap.colors)[:, :3]
+    else:
+        x = np.linspace(0, 1, 155)
+        RGB = cmap(x)[:, :3]
+    return RGB
+
+
 def create_cmap_overview(
-    *, subset: Optional[Iterable[str]] = None, filename: Optional[str] = None
+    *,
+    subset: Optional[Iterable[str]] = None,
+    filename: Optional[str] = None,
+    with_grayscale: bool = False,
 ):
     # the name of this function is inspired from the cmasher library
     # but the actual content comes from yt
@@ -107,26 +142,44 @@ def create_cmap_overview(
     filename : str, optional
         If filename is set, save the resulting image to a file.
         Otherwise, the image is displayed as a interactive matplotlib window.
+
+    with_grayscale: bool
+        Whether to display a grayscale version of each colorbar on top of the
+        colorful version. This flag requires matplotlib 3.0 or greater.
+        Defaults to False.
     """
     if subset is None:
         subset = cmyt_cmaps
+
+    if with_grayscale:
+        if parse_version(mpl_version) < parse_version("3.0.0"):
+            raise RuntimeError(
+                "`with_grayscale=True` requires Matplotlib 3.0 or greater. "
+                f"Version {mpl_version} is currently installed."
+            )
 
     cmaps = sorted(prefix_name(_) for _ in always_iterable(subset))
     if not cmaps:
         raise ValueError(f"Received invalid or empty subset: {subset}")
 
-    a = np.outer(np.arange(0, 1, 0.01), np.ones(10))
     # scale the image size by the number of cmaps
-    fig, axes = plt.subplots(nrows=len(cmaps), figsize=(6, 2.0 * len(cmaps) / 10.0))
-    fig.subplots_adjust(top=0.95, bottom=0.05, right=0.80, left=0.05)
+    fig, axes = plt.subplots(nrows=len(cmaps), figsize=(6, 2.6 * len(cmaps) / 10.0))
 
     for name, ax in zip(cmaps, axes):
-        ax.imshow(a.T, aspect="auto", cmap=plt.get_cmap(name))
-        ax.text(100, 9, unprefix_name(name), fontsize=10)
-        ax.axis("off")
-        ax.margins(0, 0)
+        RGBs = [get_rgb(plt.get_cmap(name))]
+        _axes = [ax]
+        if with_grayscale:
+            RGBs.append(to_grayscale(RGBs[0]))
+            _axes.append(ax.inset_axes([0, 1, 0.999999, 0.3]))
 
+        for rgb, _ax in zip(RGBs, _axes):
+            _ax.axis("off")
+            show_cmap(_ax, rgb)
+        ax.text(ax.get_xlim()[1] * 1.02, 0, unprefix_name(name), fontsize=10)
+
+    fig.tight_layout(h_pad=0.2)
+    fig.subplots_adjust(top=0.9, bottom=0.05, right=0.85, left=0.05)
     if filename is not None:
-        fig.savefig(os.fspath(filename), dpi=100, facecolor="gray")
+        fig.savefig(os.fspath(filename), dpi=200)
 
     return fig
