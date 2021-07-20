@@ -21,7 +21,7 @@ mpl_compare = pytest.mark.mpl_image_compare(
 )
 @pytest.mark.parametrize("subset", [None, ["pastel", "arbre", "algae"]])
 def test_overview_to_fig(subset):
-    return create_cmap_overview(subset=subset)
+    return create_cmap_overview(subset=subset, with_grayscale=True)
 
 
 def test_save_overview_to_file(tmp_path):
