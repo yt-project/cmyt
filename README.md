@@ -29,7 +29,7 @@ The following colormaps, as well as their respective reversed (`*_r`) versions a
     <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview_pixel.png" width="800"></a>
 </p>
 
-# Miscellaneous
+### Miscellaneous
 <p align="center">
     <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview_misc.png" width="800"></a>
 </p>
