@@ -10,7 +10,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from colorspacious import cspace_converter
-from matplotlib.cm import register_cmap as register_cmap_mpl
+from matplotlib.colors import Colormap
 from matplotlib.colors import LinearSegmentedColormap
 from more_itertools import always_iterable
 
@@ -86,6 +86,18 @@ def unprefix_name(name: str) -> str:
         return name
 
 
+def _register_mpl_cmap(cmap: Colormap) -> None:
+    """
+    An adapter for matplotlib that works transparently with
+    either API (historical and post 3.5.0) while dodging deprecation
+    warnings.
+    """
+    if MPL_VERSION >= (3, 5, 0):
+        matplotlib.colormaps.register(cmap)
+    else:
+        matplotlib.cm.register_cmap(cmap=cmap)
+
+
 def register_colormap(
     name: str,
     color_dict: ColorDict,
@@ -95,8 +107,8 @@ def register_colormap(
     # register to MPL
     mpl_cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
     mpl_cmap_r = mpl_cmap.reversed()
-    register_cmap_mpl(cmap=mpl_cmap)
-    register_cmap_mpl(cmap=mpl_cmap_r)
+    _register_mpl_cmap(mpl_cmap)
+    _register_mpl_cmap(mpl_cmap_r)
 
     # return cmaps with unprefixed names for registration as importable objects
     cmap = LinearSegmentedColormap(
