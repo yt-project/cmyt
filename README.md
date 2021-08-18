@@ -4,6 +4,7 @@
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/cmyt?logo=python&logoColor=white&label=Python)](https://pypi.org/project/cmyt/)
 
 [![CI](https://github.com/yt-project/cmyt/actions/workflows/ci.yml/badge.svg)](https://github.com/yt-project/cmyt/actions/workflows/ci.yml)
+[![CI (bleeding edge)](https://github.com/yt-project/cmyt/actions/workflows/bleeding-edge.yaml/badge.svg)](https://github.com/yt-project/cmyt/actions/workflows/bleeding-edge.yaml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/yt-project/cmyt/main.svg)](https://results.pre-commit.ci/latest/github/yt-project/cmyt/main)
 
 [![yt-project](https://img.shields.io/static/v1?label="works%20with"&message="yt"&color="blueviolet")](https://yt-project.org)
