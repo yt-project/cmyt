@@ -3,7 +3,9 @@ requires = [
   "setuptools >= 40.9.0",
   "wheel",
 ]
-build-backend = "setuptools.build_meta"
+# uncomment to enable pep517 after versioneer problem is fixed.
+# https://github.com/python-versioneer/python-versioneer/issues/193
+# build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 88

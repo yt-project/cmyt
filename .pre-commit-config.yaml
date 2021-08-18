@@ -2,6 +2,11 @@
 # however `minimum_pre_commit_version` itself requires 1.15.0
 minimum_pre_commit_version: "1.15.0"
 
+exclude: "^(\
+cmyt/_version.py\
+|versioneer.py\
+)"
+
 ci:
     autofix_prs: true
     autoupdate_schedule: "monthly"

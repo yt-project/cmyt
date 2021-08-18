@@ -1,3 +1,5 @@
+from ._version import get_versions
 from .cm import *
 
-__version__ = "1.0.0.dev"
+__version__ = get_versions()["version"]
+del get_versions

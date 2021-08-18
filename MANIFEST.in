@@ -1,0 +1,2 @@
+include versioneer.py
+include cmyt/_version.py
