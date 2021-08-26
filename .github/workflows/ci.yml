@@ -34,10 +34,10 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Setup package
       run: |
-        python -m pip install --upgrade pip
+        python3 -m pip install --upgrade pip
         # install wheel for experimental job (Python 3.10)
-        python -m pip install --upgrade wheel
-        python -m pip install --pre .[dev]
+        python3 -m pip install --upgrade wheel
+        python3 -m pip install --pre .[dev]
     - name: Run test suite
       run: pytest --mpl-results-path=test_results
     - uses: actions/upload-artifact@v2
@@ -57,9 +57,9 @@ jobs:
         python-version: 3.6
     - name: Setup package
       run: |
-        python -m pip install --upgrade pip
+        python3 -m pip install --upgrade pip
         python tests/scripts/hardpin_minimal_dependencies.py
-        python -m pip install -e .[dev]
+        python3 -m pip install -e .[dev]
     - name: Run test suite
       run: |
         export MPLBACKEND=Agg
