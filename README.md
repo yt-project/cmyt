@@ -38,7 +38,7 @@ The following colormaps, as well as their respective reversed (`*_r`) versions a
 ## Installation
 
 ```shell
-python -m pip install cmyt
+python3 -m pip install cmyt
 ```
 
 ## Usage
