@@ -1,7 +1,7 @@
 # cmyt
 
 [![PyPI](https://img.shields.io/pypi/v/cmyt.svg?logo=pypi&logoColor=white&label=PyPI)](https://pypi.org/project/cmyt)
-[![Supported Python Versions](https://img.shields.io/pypi/pyversions/cmyt?logo=python&logoColor=white&label=Python)](https://pypi.org/project/cmyt/)
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/cmyt/0.2.0?logo=python&logoColor=white&label=Python)](https://pypi.org/project/cmyt/)
 
 [![CI](https://github.com/yt-project/cmyt/actions/workflows/ci.yml/badge.svg)](https://github.com/yt-project/cmyt/actions/workflows/ci.yml)
 [![CI (bleeding edge)](https://github.com/yt-project/cmyt/actions/workflows/bleeding-edge.yaml/badge.svg)](https://github.com/yt-project/cmyt/actions/workflows/bleeding-edge.yaml)
