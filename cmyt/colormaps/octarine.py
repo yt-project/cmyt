@@ -1,5 +1,4 @@
 # The "octarine" colormap was originally created by Matthew Turk within the yt-project
-
 import numpy as np
 
 viscm_parameters = {
