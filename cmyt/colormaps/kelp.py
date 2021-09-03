@@ -1,5 +1,4 @@
 # The "kelp" colormap was originally created by John ZuHone within the yt-project
-
 import numpy as np
 
 # Used to reconstruct the colormap in viscm
