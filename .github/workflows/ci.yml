@@ -42,9 +42,7 @@ jobs:
     - name: Setup package
       run: |
         python3 -m pip install --upgrade pip
-        # install wheel for experimental job (Python 3.10)
-        python3 -m pip install --upgrade wheel
-        python3 -m pip install --pre .[dev]
+        python3 -m pip install .[dev]
     - name: Run test suite
       run: pytest --mpl-results-path=test_results
     - uses: actions/upload-artifact@v2
