@@ -1,11 +1,11 @@
 import matplotlib as mpl
 import pytest
-from packaging.version import parse as parse_version
+from packaging.version import Version
 
 import cmyt  # noqa: F401
 from cmyt.utils import create_cmap_overview
 
-MPL_VERSION = parse_version(mpl.__version__)
+MPL_VERSION = Version(mpl.__version__)
 
 
 mpl_compare = pytest.mark.mpl_image_compare(
@@ -16,7 +16,7 @@ mpl_compare = pytest.mark.mpl_image_compare(
 
 @mpl_compare
 @pytest.mark.skipif(
-    MPL_VERSION < parse_version("3.0"),
+    MPL_VERSION < Version("3.0"),
     reason="Support for image cropping is significantly worse in older versions of MPL.",
 )
 @pytest.mark.parametrize("subset", [None, ["pastel", "arbre", "algae"]])

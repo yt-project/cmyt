@@ -13,7 +13,7 @@ from matplotlib import __version__ as mpl_version
 from matplotlib.cm import register_cmap as register_cmap_mpl
 from matplotlib.colors import LinearSegmentedColormap
 from more_itertools import always_iterable
-from packaging.version import parse as parse_version
+from packaging.version import Version
 
 # type aliases
 if sys.version_info >= (3, 8):
@@ -156,7 +156,7 @@ def create_cmap_overview(
         subset = cmyt_cmaps
 
     if with_grayscale:
-        if parse_version(mpl_version) < parse_version("3.0.0"):
+        if Version(mpl_version) < Version("3.0.0"):
             raise RuntimeError(
                 "`with_grayscale=True` requires Matplotlib 3.0 or greater. "
                 f"Version {mpl_version} is currently installed."
