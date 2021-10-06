@@ -6,25 +6,25 @@ from typing import List
 from typing import Optional
 from typing import Tuple
 
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from colorspacious import cspace_converter
-from matplotlib import __version__ as mpl_version
 from matplotlib.cm import register_cmap as register_cmap_mpl
 from matplotlib.colors import LinearSegmentedColormap
 from more_itertools import always_iterable
-from packaging.version import parse as parse_version
+from packaging.version import Version
 
 # type aliases
 if sys.version_info >= (3, 8):
-    from typing import Final, Literal
-
-    _CMYT_PREFIX: Final[str] = "cmyt."
-    PrimaryColorName = Literal["blue", "green", "red"]
+    from typing import Final
+    from typing import Literal
 else:
-    _CMYT_PREFIX: str = "cmyt."
-    PrimaryColorName = str
+    from typing_extensions import Final
+    from typing_extensions import Literal
 
+_CMYT_PREFIX: Final[str] = "cmyt."
+PrimaryColorName = Literal["blue", "green", "red"]
 ColorDict = Dict[PrimaryColorName, List[Tuple[float, float, float]]]
 
 # this is used in cmyt.cm to programmatically import all cmaps
@@ -42,6 +42,8 @@ cmyt_cmaps = frozenset(
         "xray",
     )
 )
+
+MPL_VERSION = Version(matplotlib.__version__)
 
 
 def prefix_name(name: str) -> str:
@@ -156,10 +158,10 @@ def create_cmap_overview(
         subset = cmyt_cmaps
 
     if with_grayscale:
-        if parse_version(mpl_version) < parse_version("3.0.0"):
+        if MPL_VERSION < Version("3.0.0"):
             raise RuntimeError(
                 "`with_grayscale=True` requires Matplotlib 3.0 or greater. "
-                f"Version {mpl_version} is currently installed."
+                f"Version {MPL_VERSION} is currently installed."
             )
 
     cmaps = sorted(prefix_name(_) for _ in always_iterable(subset))
