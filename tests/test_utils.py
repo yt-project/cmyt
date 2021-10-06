@@ -1,11 +1,9 @@
-import matplotlib as mpl
 import pytest
 from packaging.version import Version
 
 import cmyt  # noqa: F401
 from cmyt.utils import create_cmap_overview
-
-MPL_VERSION = Version(mpl.__version__)
+from cmyt.utils import MPL_VERSION
 
 
 mpl_compare = pytest.mark.mpl_image_compare(
