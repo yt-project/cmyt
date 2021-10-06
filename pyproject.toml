@@ -13,12 +13,12 @@ target-version = [
   'py39',
 ]
 
-[tool.isort]
-profile = "black"
-combine_as_imports = true
-
 [tool.pytest.ini_options]
 filterwarnings = [
     "error",
 ]
 addopts = "--doctest-modules --mpl"
+
+
+[tool.mypy]
+python_version = "3.6"
