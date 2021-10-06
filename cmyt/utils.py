@@ -17,14 +17,14 @@ from packaging.version import Version
 
 # type aliases
 if sys.version_info >= (3, 8):
-    from typing import Final, Literal
-
-    _CMYT_PREFIX: Final[str] = "cmyt."
-    PrimaryColorName = Literal["blue", "green", "red"]
+    from typing import Final
+    from typing import Literal
 else:
-    _CMYT_PREFIX: str = "cmyt."
-    PrimaryColorName = str
+    from typing_extensions import Final
+    from typing_extensions import Literal
 
+_CMYT_PREFIX: Final[str] = "cmyt."
+PrimaryColorName = Literal["blue", "green", "red"]
 ColorDict = Dict[PrimaryColorName, List[Tuple[float, float, float]]]
 
 # this is used in cmyt.cm to programmatically import all cmaps
