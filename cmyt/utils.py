@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 from typing import Dict
 from typing import Iterable
@@ -13,7 +14,6 @@ from colorspacious import cspace_converter
 from matplotlib.cm import register_cmap as register_cmap_mpl
 from matplotlib.colors import LinearSegmentedColormap
 from more_itertools import always_iterable
-from packaging.version import Version
 
 # type aliases
 if sys.version_info >= (3, 8):
@@ -43,7 +43,24 @@ cmyt_cmaps = frozenset(
     )
 )
 
-MPL_VERSION = Version(matplotlib.__version__)
+
+def version_tuple(version: str) -> Tuple[int, ...]:
+    elems = version.split(".")
+    if len(elems) >= 3:
+        elems = elems[:3]
+
+    if not elems[-1].isnumeric():
+        # allow alpha/beta/release candidate versions
+        match = re.search(r"^\d+", elems[-1])
+        if match is None:
+            elems.pop()
+        else:
+            elems[-1] = match.group()
+
+    return tuple(int(_) for _ in elems)
+
+
+MPL_VERSION = version_tuple(matplotlib.__version__)
 
 
 def prefix_name(name: str) -> str:
@@ -158,7 +175,7 @@ def create_cmap_overview(
         subset = cmyt_cmaps
 
     if with_grayscale:
-        if MPL_VERSION < Version("3.0.0"):
+        if MPL_VERSION < (3, 0, 0):
             raise RuntimeError(
                 "`with_grayscale=True` requires Matplotlib 3.0 or greater. "
                 f"Version {MPL_VERSION} is currently installed."
