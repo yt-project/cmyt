@@ -1,5 +1,4 @@
 import pytest
-from packaging.version import Version
 
 import cmyt  # noqa: F401
 from cmyt.utils import create_cmap_overview
@@ -14,7 +13,7 @@ mpl_compare = pytest.mark.mpl_image_compare(
 
 @mpl_compare
 @pytest.mark.skipif(
-    MPL_VERSION < Version("3.0"),
+    MPL_VERSION < (3, 0, 0),
     reason="Support for image cropping is significantly worse in older versions of MPL.",
 )
 @pytest.mark.parametrize("subset", [None, ["pastel", "arbre", "algae"]])
