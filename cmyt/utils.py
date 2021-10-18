@@ -46,7 +46,7 @@ cmyt_cmaps = frozenset(
 
 def version_tuple(version: str) -> Tuple[int, ...]:
     elems = version.split(".")
-    if len(elems) >= 3:
+    if len(elems) > 3:
         elems = elems[:3]
 
     if not elems[-1].isnumeric():
