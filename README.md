@@ -95,7 +95,7 @@ version will be considered major. If you're developing a library that depends on
 cmyt, we recommend to set an explicit upper limit as well as a minimal one in
 your requirements as for instance
 ```
-cmyt >= 0.1.1, < 1.0.0
+cmyt >= 1.0.1, < 2.0.0
 ```
 with the minimal required version pointing to the e.g. the last colormap
 addition your need, and the upper limit preventing your CI to upgrade to a major
