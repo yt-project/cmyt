@@ -1,6 +1,7 @@
 # cmyt
 
 [![PyPI](https://img.shields.io/pypi/v/cmyt.svg?logo=pypi&logoColor=white&label=PyPI)](https://pypi.org/project/cmyt)
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/cmyt.svg?logo=condaforge&logoColor=white)](https://anaconda.org/conda-forge/cmyt)
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/cmyt/1.0.1?logo=python&logoColor=white&label=Python)](https://pypi.org/project/cmyt/)
 
 [![CI](https://github.com/yt-project/cmyt/actions/workflows/ci.yml/badge.svg)](https://github.com/yt-project/cmyt/actions/workflows/ci.yml)
@@ -36,8 +37,13 @@ The following colormaps, as well as their respective reversed (`*_r`) versions a
 
 ## Installation
 
+with `pip`
 ```shell
 python3 -m pip install cmyt
+```
+or with `conda`
+```shell
+conda install -c conda-forge cmyt
 ```
 
 ## Usage
