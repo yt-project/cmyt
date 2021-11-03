@@ -37,8 +37,13 @@ The following colormaps, as well as their respective reversed (`*_r`) versions a
 
 ## Installation
 
+with `pip`
 ```shell
 python3 -m pip install cmyt
+```
+or with `conda`
+```shell
+conda install -c conda-forge cmyt
 ```
 
 ## Usage
