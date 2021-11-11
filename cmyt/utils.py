@@ -3,7 +3,6 @@ import re
 import sys
 from typing import Dict
 from typing import Iterable
-from typing import List
 from typing import Optional
 from typing import Tuple
 
@@ -25,7 +24,8 @@ else:
 
 _CMYT_PREFIX: Final[str] = "cmyt."
 PrimaryColorName = Literal["blue", "green", "red"]
-ColorDict = Dict[PrimaryColorName, List[Tuple[float, float, float]]]
+
+ColorDict = Dict[PrimaryColorName, Iterable[Tuple[float, float, float]]]
 
 # this is used in cmyt.cm to programmatically import all cmaps
 cmyt_cmaps = frozenset(
