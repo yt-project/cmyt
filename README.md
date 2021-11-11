@@ -95,11 +95,11 @@ cmyt uses semantic versioning as defined by https://semver.org.
 
 In practice this means that new colormaps may be added in minor patches, and any
 backward incompatible change to existing colormaps will happen as a major
-change. Likewise, adding support for new Python/Matplotlib versions will be
-considered minor changes, while droping support for EOL Python/Matplotlib
-version will be considered major. If you're developing a library that depends on
-cmyt, we recommend to set an explicit upper limit as well as a minimal one in
-your requirements as for instance
+change.
+
+If you're developing a library that depends on cmyt, we recommend to set an
+explicit upper limit as well as a minimal one in your requirements as for
+instance
 ```
 cmyt >= 1.0.1, < 2.0.0
 ```
