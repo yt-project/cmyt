@@ -78,11 +78,12 @@ def unprefix_name(name: str) -> str:
     >>> unprefix_name("arbre")
     'arbre'
     """
-    if sys.version_info < (3, 9):
+    if sys.version_info >= (3, 9):
+        return name.removeprefix(_CMYT_PREFIX)
+    else:
         if name.startswith(_CMYT_PREFIX):
             return name[len(_CMYT_PREFIX) :]
         return name
-    return name.removeprefix(_CMYT_PREFIX)
 
 
 def register_colormap(
