@@ -2,7 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/cmyt.svg?logo=pypi&logoColor=white&label=PyPI)](https://pypi.org/project/cmyt)
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/cmyt.svg?logo=condaforge&logoColor=white)](https://anaconda.org/conda-forge/cmyt)
-[![Supported Python Versions](https://img.shields.io/pypi/pyversions/cmyt/1.0.1?logo=python&logoColor=white&label=Python)](https://pypi.org/project/cmyt/)
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/cmyt/1.0.3?logo=python&logoColor=white&label=Python)](https://pypi.org/project/cmyt/)
 
 [![CI](https://github.com/yt-project/cmyt/actions/workflows/ci.yml/badge.svg)](https://github.com/yt-project/cmyt/actions/workflows/ci.yml)
 [![CI (bleeding edge)](https://github.com/yt-project/cmyt/actions/workflows/bleeding-edge.yaml/badge.svg)](https://github.com/yt-project/cmyt/actions/workflows/bleeding-edge.yaml)
@@ -101,7 +101,7 @@ If you're developing a library that depends on cmyt, we recommend to set an
 explicit upper limit as well as a minimal one in your requirements as for
 instance
 ```
-cmyt >= 1.0.1, < 2.0.0
+cmyt >= 1.0.3, < 2.0.0
 ```
 with the minimal required version pointing to the e.g. the last colormap
 addition your need, and the upper limit preventing your CI to upgrade to a major
