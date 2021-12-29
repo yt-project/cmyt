@@ -10,8 +10,10 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from colorspacious import cspace_converter
+from matplotlib.axes import Axes
 from matplotlib.colors import Colormap
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.figure import Figure
 from more_itertools import always_iterable
 
 # type aliases
@@ -101,7 +103,7 @@ def _register_mpl_cmap(cmap: Colormap) -> None:
 def register_colormap(
     name: str,
     color_dict: ColorDict,
-):
+) -> Tuple[LinearSegmentedColormap, LinearSegmentedColormap]:
     name = prefix_name(name)
 
     # register to MPL
@@ -124,19 +126,19 @@ _sRGB1_to_JCh = cspace_converter("sRGB1", graySCALE_CONVERSION_SPACE)
 _JCh_to_sRGB1 = cspace_converter(graySCALE_CONVERSION_SPACE, "sRGB1")
 
 
-def to_grayscale(sRGB1):
+def to_grayscale(sRGB1: np.ndarray) -> np.ndarray:
     # this is adapted from viscm 0.8
     JCh = _sRGB1_to_JCh(sRGB1)
     JCh[..., 1] = 0
     return np.clip(_JCh_to_sRGB1(JCh), 0, 1)
 
 
-def show_cmap(ax, rgb):
+def show_cmap(ax: Axes, rgb: np.ndarray) -> None:
     # this is adapted from viscm 0.8
     ax.imshow(rgb[np.newaxis, ...], aspect="auto")
 
 
-def get_rgb(cmap):
+def get_rgb(cmap: Colormap) -> np.ndarray:
     # this is adapted from viscm 0.8
     from matplotlib.colors import ListedColormap
 
@@ -153,7 +155,7 @@ def create_cmap_overview(
     subset: Optional[Iterable[str]] = None,
     filename: Optional[str] = None,
     with_grayscale: bool = False,
-):
+) -> Figure:
     # the name of this function is inspired from the cmasher library
     # but the actual content comes from yt
     """
