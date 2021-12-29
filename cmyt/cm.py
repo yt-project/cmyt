@@ -7,7 +7,7 @@ from cmyt.utils import ColorDict
 from cmyt.utils import register_colormap
 
 
-def _luts_to_cdict(luts) -> ColorDict:
+def _luts_to_cdict(luts: np.ndarray) -> ColorDict:
     _vs = np.linspace(0, 1, 256)
 
     return {
@@ -21,9 +21,9 @@ for name in cmyt_cmaps:
     # register to MPL
     mod = import_module(f"cmyt.colormaps.{name}")
     if hasattr(mod, "data"):
-        data = mod.data  # type: ignore
+        data = mod.data
     elif hasattr(mod, "luts"):
-        data = _luts_to_cdict(mod.luts)  # type: ignore
+        data = _luts_to_cdict(mod.luts)
     else:
         raise RuntimeError(
             f"colormap module '{name}' doesn't contain necessary data for registration."
