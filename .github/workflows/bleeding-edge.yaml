@@ -44,7 +44,6 @@ jobs:
 
     - name: Run test suite
       run: |
-        export MPLBACKEND=Agg
         pytest --mpl-results-path=test_results -Werror
 
     - uses: actions/upload-artifact@v2
