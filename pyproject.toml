@@ -17,7 +17,7 @@ target-version = [
 filterwarnings = [
     "error",
 ]
-addopts = "--doctest-modules --mpl"
+addopts = "--doctest-modules"
 
 
 [tool.mypy]
