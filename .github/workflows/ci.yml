@@ -44,7 +44,7 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install .[dev]
     - name: Run test suite
-      run: pytest --mpl-results-path=test_results
+      run: pytest
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
@@ -66,10 +66,27 @@ jobs:
         python tests/scripts/hardpin_minimal_dependencies.py
         python3 -m pip install -e .[dev]
     - name: Run test suite
+      run: pytest
+
+  image_tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Setup package
+      run: python3 -m pip install ".[dev]"
+
+    - name: Run image tests
       run: |
-        pytest --mpl-results-path=test_results
-    - uses: actions/upload-artifact@v2
+        pytest -vvv --mpl --mpl-generate-summary=html --mpl-results-path=mpl_results
+
+    - name: Upload pytest-mpl report
+      uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: test_results
-        path: test_results/
+        name: image_tests_report
+        path: mpl_results/*
