@@ -4,6 +4,7 @@ import numpy as np
 
 from cmyt.utils import cmyt_cmaps
 from cmyt.utils import ColorDict
+from cmyt.utils import idl_cmaps
 from cmyt.utils import register_colormap
 
 
@@ -17,7 +18,7 @@ def _luts_to_cdict(luts: np.ndarray) -> ColorDict:
     }
 
 
-for name in cmyt_cmaps:
+for name in cmyt_cmaps.union(idl_cmaps):
     # register to MPL
     mod = import_module(f"cmyt.colormaps.{name}")
     if hasattr(mod, "data"):
