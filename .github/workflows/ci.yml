@@ -59,7 +59,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.6
+        python-version: '3.6'
     - name: Setup package
       run: |
         python3 -m pip install --upgrade pip
