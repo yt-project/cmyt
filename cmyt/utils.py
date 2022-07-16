@@ -7,18 +7,20 @@ from typing import Iterable
 from typing import Literal
 from typing import Optional
 from typing import Tuple
+from typing import TYPE_CHECKING
 
 import matplotlib
-import matplotlib.pyplot as plt
 import numpy as np
 from colorspacious import cspace_converter
-from matplotlib.axes import Axes
 from matplotlib.colors import Colormap
 from matplotlib.colors import LinearSegmentedColormap
-from matplotlib.figure import Figure
 from more_itertools import always_iterable
 
 # type aliases
+
+if TYPE_CHECKING:
+    from matplotlib.axes import Axes
+    from matplotlib.figure import Figure
 
 _CMYT_PREFIX: Final[str] = "cmyt."
 PrimaryColorName = Literal["blue", "green", "red"]
@@ -129,7 +131,7 @@ def to_grayscale(sRGB1: np.ndarray) -> np.ndarray:
     return np.clip(_JCh_to_sRGB1(JCh), 0, 1)
 
 
-def show_cmap(ax: Axes, rgb: np.ndarray) -> None:
+def show_cmap(ax: "Axes", rgb: np.ndarray) -> None:
     # this is adapted from viscm 0.8
     ax.imshow(rgb[np.newaxis, ...], aspect="auto")
 
@@ -151,7 +153,7 @@ def create_cmap_overview(
     subset: Optional[Iterable[str]] = None,
     filename: Optional[str] = None,
     with_grayscale: bool = False,
-) -> Figure:
+) -> "Figure":
     # the name of this function is inspired from the cmasher library
     # but the actual content comes from yt
     """
@@ -182,6 +184,8 @@ def create_cmap_overview(
         colorful version. This flag requires matplotlib 3.0 or greater.
         Defaults to False.
     """
+    import matplotlib.pyplot as plt
+
     if subset is None:
         subset = cmyt_cmaps
 
