@@ -2,7 +2,6 @@ import pytest
 
 import cmyt  # noqa: F401
 from cmyt.utils import create_cmap_overview
-from cmyt.utils import MPL_VERSION
 
 
 mpl_compare = pytest.mark.mpl_image_compare(
@@ -12,10 +11,6 @@ mpl_compare = pytest.mark.mpl_image_compare(
 
 
 @mpl_compare
-@pytest.mark.skipif(
-    MPL_VERSION < (3, 0, 0),
-    reason="Support for image cropping is significantly worse in older versions of MPL.",
-)
 @pytest.mark.parametrize("subset", [None, ["pastel", "arbre", "algae"]])
 def test_overview_to_fig(subset):
     return create_cmap_overview(subset=subset, with_grayscale=True)
