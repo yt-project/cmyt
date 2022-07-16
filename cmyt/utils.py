@@ -185,13 +185,6 @@ def create_cmap_overview(
     if subset is None:
         subset = cmyt_cmaps
 
-    if with_grayscale:
-        if MPL_VERSION < (3, 0, 0):
-            raise RuntimeError(
-                "`with_grayscale=True` requires Matplotlib 3.0 or greater. "
-                f"Version {MPL_VERSION} is currently installed."
-            )
-
     cmaps = sorted(prefix_name(_) for _ in always_iterable(subset))
     if not cmaps:
         raise ValueError(f"Received invalid or empty subset: {subset}")
