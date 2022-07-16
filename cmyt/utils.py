@@ -2,7 +2,9 @@ import os
 import re
 import sys
 from typing import Dict
+from typing import Final
 from typing import Iterable
+from typing import Literal
 from typing import Optional
 from typing import Tuple
 
@@ -17,12 +19,6 @@ from matplotlib.figure import Figure
 from more_itertools import always_iterable
 
 # type aliases
-if sys.version_info >= (3, 8):
-    from typing import Final
-    from typing import Literal
-else:
-    from typing_extensions import Final
-    from typing_extensions import Literal
 
 _CMYT_PREFIX: Final[str] = "cmyt."
 PrimaryColorName = Literal["blue", "green", "red"]
