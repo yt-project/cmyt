@@ -21,7 +21,7 @@ addopts = "--doctest-modules"
 
 
 [tool.mypy]
-python_version = "3.6"
+python_version = "3.8"
 warn_unused_configs = true
 warn_unused_ignores = true
 warn_unreachable = true
