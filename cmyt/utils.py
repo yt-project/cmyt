@@ -95,7 +95,9 @@ def _register_mpl_cmap(cmap: Colormap) -> None:
     if MPL_VERSION >= (3, 5, 0):
         matplotlib.colormaps.register(cmap)
     else:
-        matplotlib.cm.register_cmap(cmap=cmap)
+        from matplotlib.cm import register_cmap
+
+        register_cmap(cmap=cmap)
 
 
 def register_colormap(
