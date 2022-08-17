@@ -59,7 +59,7 @@ import cmyt  # that's it !
 prng = np.random.RandomState(0x4D3D3D3)
 noise = prng.random_sample((100, 100))
 x, y = np.mgrid[-50:50, -50:50]
-z = 5 * np.exp(-(x ** 2 + y ** 2) / 1000)
+z = 5 * np.exp(-(x**2 + y**2) / 1000)
 
 # setup the figure
 fig, ax = plt.subplots()
