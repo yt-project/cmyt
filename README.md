@@ -11,7 +11,6 @@
 [![yt-project](https://img.shields.io/static/v1?label="works%20with"&message="yt"&color="blueviolet")](https://yt-project.org)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-
 <a href="http://yt-project.org"><img src="https://raw.githubusercontent.com/yt-project/yt/main/doc/source/_static/yt_logo.png" width="150"></a>
 
 Matplotlib colormaps from the yt project !
@@ -21,16 +20,19 @@ Matplotlib colormaps from the yt project !
 The following colormaps, as well as their respective reversed (`*_r`) versions are available
 
 ### Perceptually uniform sequential colormaps
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview_perceptually_uniform.png" width="800"></a>
 </p>
 
 ### Monochromatic sequential colormaps
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview_pixel.png" width="800"></a>
 </p>
 
 ### Miscellaneous
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/overview_misc.png" width="800"></a>
 </p>
@@ -38,18 +40,23 @@ The following colormaps, as well as their respective reversed (`*_r`) versions a
 ## Installation
 
 with `pip`
+
 ```shell
 python3 -m pip install cmyt
 ```
+
 or with `conda`
+
 ```shell
 conda install -c conda-forge cmyt
 ```
 
 ## Usage
+
 cmyt integrates with matplotlib in a similar fashion to
 [cmocean](https://matplotlib.org/cmocean/) or
 [cmasher](https://cmasher.readthedocs.io)
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -69,6 +76,7 @@ ax.set(aspect="equal")
 im = ax.pcolormesh(x, y, z + noise, cmap="cmyt.arbre", shading="flat")
 fig.colorbar(im, ax=ax)
 ```
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/demo.png" width="400"></a>
 </p>
@@ -82,6 +90,7 @@ ax.set(aspect="equal")
 im = ax.contourf(x, y, z + noise, cmap=pastel)
 fig.colorbar(im, ax=ax)
 ```
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/yt-project/cmyt/main/doc/demo_alt.png" width="400"></a>
 </p>

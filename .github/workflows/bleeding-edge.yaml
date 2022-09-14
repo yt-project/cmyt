@@ -15,7 +15,7 @@ on:
       - .github/workflows/bleeding-edge.yaml
   schedule:
     # run this every day at 3 am UTC
-    - cron: '0 3 * * *'
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
@@ -25,32 +25,32 @@ jobs:
     timeout-minutes: 60
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Set up Python Dev Version
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11-dev'
+      - name: Set up Python Dev Version
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11-dev"
 
-    - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade setuptools wheel
-        python3 -m pip install git+https://github.com/numpy/numpy.git
-        python3 -m pip install git+https://github.com/matplotlib/matplotlib.git
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --upgrade setuptools wheel
+          python3 -m pip install git+https://github.com/numpy/numpy.git
+          python3 -m pip install git+https://github.com/matplotlib/matplotlib.git
 
-    - name: Build cmyt
-      run: |
-        python3 -m pip install -e .[dev] --no-build-isolation
+      - name: Build cmyt
+        run: |
+          python3 -m pip install -e .[dev] --no-build-isolation
 
-    - name: Run test suite
-      run: |
-        pytest --mpl-results-path=test_results -Werror
+      - name: Run test suite
+        run: |
+          pytest --mpl-results-path=test_results -Werror
 
-    - uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-        name: test_results
-        path: test_results/
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test_results
+          path: test_results/
