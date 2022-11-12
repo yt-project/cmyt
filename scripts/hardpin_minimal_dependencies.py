@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
-import configparser
-import io
+import sys
+
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    import tomli as tomllib
+
+import tomli_w
+
 import re
 from collections.abc import MutableMapping
 
@@ -22,20 +29,15 @@ def hardpin(s: str) -> str:
 
 
 def hardpin_mapping(m: MutableMapping, key: str) -> None:
-    reqs = m[key].split("\n")
-    m[key] = "\n".join(hardpin(_) for _ in reqs)
+    m[key] = [hardpin(_) for _ in m[key]]
 
 
 if __name__ == "__main__":
-    cp = configparser.ConfigParser()
-    cp.read("setup.cfg")
-    hardpin_mapping(cp["options"], "install_requires")
-    for target in cp["options.extras_require"].keys():
-        hardpin_mapping(cp["options.extras_require"], target)
+    with open("pyproject.toml", "rb") as fh:
+        conf = tomllib.load(fh)
+    hardpin_mapping(conf["project"], "dependencies")
+    for target in conf["project"]["optional-dependencies"]:
+        hardpin_mapping(conf["project"]["optional-dependencies"], target)
 
-    output = io.StringIO()
-    cp.write(output)
-    s = output.getvalue().replace("\t", " " * 4)
-    s = "\n".join(_.rstrip() for _ in s.split("\n"))
-    with open("setup.cfg", "w") as fh:
-        fh.write(s)
+    with open("pyproject.toml", "wb") as fhw:
+        tomli_w.dump(conf, fhw)

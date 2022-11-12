@@ -1,24 +1,66 @@
 [build-system]
 requires = [
-  "setuptools >= 40.9.0",
-  "wheel",
+    "setuptools>=61.2",
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmyt"
+version = "1.1.2"
+description = "A collection of Matplotlib colormaps from the yt project"
+authors = [
+    { name = "The yt project", email = "yt-dev@python.org" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Matplotlib",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX :: AIX",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Typing :: Typed",
+]
+keywords = [
+    "visualization",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "colorspacious>=1.1.2",
+    "matplotlib>=3.2.0",
+    "more-itertools>=8.4",
+    "numpy>=1.17.4",
+]
+
+[project.license]
+text = "BSD 3-Clause"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.2.4",
+    "pytest-cov>=2.12.1",
+    "pytest-mpl>=0.13",
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://yt-project.org/"
+Source = "https://github.com/yt-project/cmyt/"
+Tracker = "https://github.com/yt-project/cmyt/issues"
 
 [tool.black]
 line-length = 88
 target-version = [
-  'py37',
   'py38',
   'py39',
+  'py310',
 ]
-
-[tool.pytest.ini_options]
-filterwarnings = [
-    "error",
-]
-addopts = "--doctest-modules"
-
 
 [tool.mypy]
 python_version = "3.8"
@@ -29,8 +71,23 @@ show_error_context = true
 show_error_codes = true
 disallow_untyped_defs = true
 
-
 [[tool.mypy.overrides]]
 module = "tests.*"
 disallow_untyped_defs = true
 ignore_errors = true
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+]
+addopts = "--doctest-modules"
+testpaths = ["tests"]
+
+[tool.setuptools]
+license-files = [
+    "LICENSE",
+]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+namespaces = false
