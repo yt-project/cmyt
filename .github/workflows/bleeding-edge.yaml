@@ -9,13 +9,13 @@ name: CI (bleeding edge)
 on:
   push:
     branches:
-      - main
+    - main
   pull_request:
     paths:
-      - .github/workflows/bleeding-edge.yaml
+    - .github/workflows/bleeding-edge.yaml
   schedule:
     # run this every day at 3 am UTC
-    - cron: '0 3 * * *'
+  - cron: 0 3 * * *
   workflow_dispatch:
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
     - name: Set up Python Dev Version
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11-dev'
+        python-version: 3.11-dev
 
     - name: Install dependencies
       run: |

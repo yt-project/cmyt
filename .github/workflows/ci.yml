@@ -2,34 +2,34 @@ name: CI
 on:
   pull_request:
     paths-ignore:
-      - "**/*.md"
+    - '**/*.md'
   push:
     branches:
-      - main
+    - main
   schedule:
-    - cron: '0 3 * * *'
+  - cron: 0 3 * * *
 
 jobs:
   tests:
     strategy:
       matrix:
         os:
-          - ubuntu-latest
+        - ubuntu-latest
         python-version:
-          - '3.8'
-          - '3.9'
-          - '3.10'
-          - '3.11'
+        - '3.8'
+        - '3.9'
+        - '3.10'
+        - '3.11'
         include:
           # only test oldest and most recent Python on other platforms
-          - os: macos-latest
-            python-version: '3.8'
-          - os: macos-latest
-            python-version: '3.11'
-          - os: windows-latest
-            python-version: '3.8'
-          - os: windows-latest
-            python-version: '3.11'
+        - os: macos-latest
+          python-version: '3.8'
+        - os: macos-latest
+          python-version: '3.11'
+        - os: windows-latest
+          python-version: '3.8'
+        - os: windows-latest
+          python-version: '3.11'
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout Source
@@ -61,9 +61,10 @@ jobs:
         python-version: '3.8'
     - name: Setup package
       run: |
-        python3 -m pip install --upgrade pip
-        python tests/scripts/hardpin_minimal_dependencies.py
-        python3 -m pip install -e .[dev]
+        python -m pip install --upgrade pip
+        python -m pip install tomli tomli_w
+        python scripts/hardpin_minimal_dependencies.py
+        python -m pip install -e .[dev]
     - name: Run test suite
       run: pytest
 
