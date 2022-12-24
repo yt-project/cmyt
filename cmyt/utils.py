@@ -11,7 +11,6 @@ from typing import TYPE_CHECKING
 
 import matplotlib
 import numpy as np
-from colorspacious import cspace_converter
 from matplotlib.colors import Colormap
 from matplotlib.colors import LinearSegmentedColormap
 from more_itertools import always_iterable
@@ -122,12 +121,15 @@ def register_colormap(
 
 
 graySCALE_CONVERSION_SPACE = "JCh"
-_sRGB1_to_JCh = cspace_converter("sRGB1", graySCALE_CONVERSION_SPACE)
-_JCh_to_sRGB1 = cspace_converter(graySCALE_CONVERSION_SPACE, "sRGB1")
 
 
 def to_grayscale(sRGB1: np.ndarray) -> np.ndarray:
     # this is adapted from viscm 0.8
+    from colorspacious import cspace_converter
+
+    _sRGB1_to_JCh = cspace_converter("sRGB1", graySCALE_CONVERSION_SPACE)
+    _JCh_to_sRGB1 = cspace_converter(graySCALE_CONVERSION_SPACE, "sRGB1")
+
     JCh = _sRGB1_to_JCh(sRGB1)
     JCh[..., 1] = 0
     return np.clip(_JCh_to_sRGB1(JCh), 0, 1)
