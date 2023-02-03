@@ -38,12 +38,15 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Setup package
+    - name: Build library
       run: |
         python -m pip install --upgrade pip
-        python -m pip install .[dev]
+        python -m pip install .
+        python -m pip install --requirement requirements/tests.txt
     - name: Run test suite
-      run: pytest --color yes
+      run: |
+        python -m pip freeze
+        pytest --color yes
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
@@ -59,14 +62,18 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.8'
-    - name: Setup package
+    - name: Build library
       run: |
         python -m pip install --upgrade pip
         python -m pip install tomli tomli_w
         python scripts/hardpin_minimal_dependencies.py
-        python -m pip install -e .[dev]
+        python -m pip install .
+        python -m pip install --requirement requirements/tests.txt
+
     - name: Run test suite
-      run: pytest --color yes
+      run: |
+        python -m pip freeze
+        pytest --color yes
 
   image_tests:
     runs-on: ubuntu-latest
@@ -77,12 +84,16 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Setup package
-      run: python -m pip install ".[dev]"
+    - name: Build library
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install .
+        python -m pip install --requirement requirements/tests.txt
 
     - name: Run image tests
       run: |
-        pytest --color yes -v --mpl --mpl-generate-summary=html --mpl-results-path=mpl_results
+        python -m pip freeze
+        pytest --color yes -vvv --mpl --mpl-generate-summary=html --mpl-results-path=mpl_results
 
     - name: Upload pytest-mpl report
       uses: actions/upload-artifact@v2
@@ -114,8 +125,8 @@ jobs:
     - name: Build
       run: |
         python -m pip install --upgrade pip
-        python -m pip install "."
-        python -m pip install -r tests/type-check_requirements.txt
+        python -m pip install .
+        python -m pip install --requirement requirements/typecheck.txt
 
     - name: Run mypy
       run: mypy cmyt
