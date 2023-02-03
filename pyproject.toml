@@ -1,7 +1,5 @@
 [build-system]
-requires = [
-    "setuptools>=61.2",
-]
+requires = ["setuptools>=61.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -47,6 +45,15 @@ Homepage = "https://yt-project.org/"
 Source = "https://github.com/yt-project/cmyt/"
 Tracker = "https://github.com/yt-project/cmyt/issues"
 
+[tool.setuptools]
+license-files = [
+    "LICENSE",
+]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+namespaces = false
+
 [tool.black]
 line-length = 88
 target-version = [
@@ -76,12 +83,3 @@ filterwarnings = [
 ]
 addopts = "--doctest-modules"
 testpaths = ["tests"]
-
-[tool.setuptools]
-license-files = [
-    "LICENSE",
-]
-include-package-data = false
-
-[tool.setuptools.packages.find]
-namespaces = false
