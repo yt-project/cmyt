@@ -54,14 +54,6 @@ include-package-data = false
 [tool.setuptools.packages.find]
 namespaces = false
 
-[tool.black]
-line-length = 88
-target-version = [
-  'py38',
-  'py39',
-  'py310',
-]
-
 [tool.mypy]
 python_version = "3.8"
 warn_unused_configs = true
