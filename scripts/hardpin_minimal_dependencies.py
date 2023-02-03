@@ -36,7 +36,7 @@ if __name__ == "__main__":
     with open("pyproject.toml", "rb") as fh:
         conf = tomllib.load(fh)
     hardpin_mapping(conf["project"], "dependencies")
-    for target in conf["project"]["optional-dependencies"]:
+    for target in conf["project"].get("optional-dependencies", {}):
         hardpin_mapping(conf["project"]["optional-dependencies"], target)
 
     with open("pyproject.toml", "wb") as fhw:
