@@ -36,18 +36,19 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install --upgrade setuptools wheel
-        python3 -m pip install git+https://github.com/numpy/numpy.git
-        python3 -m pip install git+https://github.com/matplotlib/matplotlib.git
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade setuptools wheel
+        python -m pip install git+https://github.com/numpy/numpy.git
+        python -m pip install git+https://github.com/matplotlib/matplotlib.git
 
-    - name: Build cmyt
+    - name: Build library
       run: |
-        python3 -m pip install -e .[dev] --no-build-isolation
+        python -m pip install . --no-build-isolation
+        python -m pip install --requirement requirements/tests.txt
 
     - name: Run test suite
       run: |
-        pytest --mpl-results-path=test_results -Werror
+        pytest --color yes --mpl-results-path=test_results -Werror
 
     - uses: actions/upload-artifact@v2
       if: failure()
