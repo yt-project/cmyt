@@ -3,7 +3,6 @@ import pytest
 import cmyt  # noqa: F401
 from cmyt.utils import create_cmap_overview
 
-
 mpl_compare = pytest.mark.mpl_image_compare(
     savefig_kwargs={"bbox_inches": "tight"},
     style="default",

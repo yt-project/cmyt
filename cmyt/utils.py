@@ -1,18 +1,11 @@
 import os
 import re
 import sys
-from typing import Dict
-from typing import Final
-from typing import Iterable
-from typing import Literal
-from typing import Optional
-from typing import Tuple
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Final, Iterable, Literal, Optional, Tuple
 
 import matplotlib
 import numpy as np
-from matplotlib.colors import Colormap
-from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.colors import Colormap, LinearSegmentedColormap
 from more_itertools import always_iterable
 
 # type aliases
