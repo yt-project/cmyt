@@ -1,7 +1,0 @@
-[flake8]
-ignore =
-    E203,
-    E501,
-    W503,
-exclude =
-    *__init__.py
