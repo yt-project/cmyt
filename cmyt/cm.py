@@ -2,9 +2,7 @@ from importlib import import_module
 
 import numpy as np
 
-from cmyt.utils import cmyt_cmaps
-from cmyt.utils import ColorDict
-from cmyt.utils import register_colormap
+from cmyt.utils import ColorDict, cmyt_cmaps, register_colormap
 
 
 def _luts_to_cdict(luts: np.ndarray) -> ColorDict:

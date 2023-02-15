@@ -54,6 +54,22 @@ include-package-data = false
 [tool.setuptools.packages.find]
 namespaces = false
 
+[tool.ruff]
+target-version = "py38" # https://github.com/charliermarsh/ruff/issues/2039
+exclude = ["*__init__.py"]
+ignore = ["E501"]
+select = [
+    "E",
+    "F",
+    "W",
+    "B",
+    "I",
+    "UP",
+]
+
+[tool.ruff.isort]
+combine-as-imports = true
+
 [tool.mypy]
 python_version = "3.8"
 warn_unused_configs = true

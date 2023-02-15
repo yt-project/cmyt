@@ -6,10 +6,10 @@ if sys.version_info >= (3, 11):
 else:
     import tomli as tomllib
 
-import tomli_w
-
 import re
 from collections.abc import MutableMapping
+
+import tomli_w
 
 
 def hardpin(s: str) -> str:
