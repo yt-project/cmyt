@@ -50,7 +50,7 @@ jobs:
       run: |
         pytest --color yes --mpl-results-path=test_results -Werror
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       if: failure()
       with:
         name: test_results

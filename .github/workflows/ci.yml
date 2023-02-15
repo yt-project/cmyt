@@ -47,7 +47,7 @@ jobs:
       run: |
         python -m pip freeze
         pytest --color yes
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       if: failure()
       with:
         name: test_results
@@ -96,7 +96,7 @@ jobs:
         pytest --color yes -vvv --mpl --mpl-generate-summary=html --mpl-results-path=mpl_results
 
     - name: Upload pytest-mpl report
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       if: failure()
       with:
         name: image_tests_report
