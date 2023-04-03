@@ -17,7 +17,7 @@ repos:
   - id: check-shebang-scripts-are-executable
 
 - repo: https://github.com/psf/black
-  rev: 23.1.0
+  rev: 23.3.0
   hooks:
   - id: black
     language_version: python3
@@ -29,7 +29,7 @@ repos:
     additional_dependencies: [black==23.1.0]
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.0.256
+  rev: v0.0.260
   hooks:
   - id: ruff
     args: [--fix]
@@ -40,7 +40,7 @@ repos:
   - id: rst-backticks
 
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.7.0
+  rev: v2.8.0
   hooks:
   - id: pretty-format-yaml
     args: [--autofix, --indent, '2']
