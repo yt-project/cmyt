@@ -75,14 +75,16 @@ jobs:
         python -m pip freeze
         pytest --color yes
 
-  image_tests:
+
+  image-tests:
+    name: Image tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Setup Python
+    - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.11'
 
     - name: Build library
       run: |
@@ -90,17 +92,36 @@ jobs:
         python -m pip install .
         python -m pip install --requirement requirements/tests.txt
 
-    - name: Run image tests
+    - name: Run Image Tests
       run: |
-        python -m pip freeze
-        pytest --color yes -vvv --mpl --mpl-generate-summary=html --mpl-results-path=mpl_results
+        pytest --color=yes --mpl -m mpl_image_compare \
+               --mpl-generate-summary=html \
+               --mpl-results-path=pytest_mpl_results \
+               --mpl-baseline-path=tests/baseline
 
-    - name: Upload pytest-mpl report
-      uses: actions/upload-artifact@v3
+    - name: Generate new image baseline
       if: failure()
+      run: |
+        pytest --color=yes --mpl -m mpl_image_compare \
+               --mpl-generate-path=pytest_mpl_new_baseline \
+               --last-failed
+
+    # always attempt to upload artifacts, even
+    # (and especially) in case of failure.
+    - name: Upload pytest-mpl report
+      if: always()
+      uses: actions/upload-artifact@v3
       with:
-        name: image_tests_report
-        path: mpl_results/*
+        name: cmyt_pytest_mpl_results
+        path: pytest_mpl_results/*
+
+    - name: Upload pytest-mpl baseline
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: cmyt_pytest_mpl_new_baseline
+        path: pytest_mpl_new_baseline/*
+        if-no-files-found: ignore
 
   type-check:
     runs-on: ubuntu-latest
