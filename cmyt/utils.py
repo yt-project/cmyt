@@ -23,6 +23,7 @@ ColorDict = Dict[PrimaryColorName, Iterable[Tuple[float, float, float]]]
 cmyt_cmaps = frozenset(
     (
         "algae",
+        "apricity",
         "arbre",
         "dusk",
         "kelp",
