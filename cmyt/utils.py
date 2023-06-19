@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Dict, Final, Iterable, Literal, Optional, Tupl
 
 import matplotlib
 import numpy as np
-from matplotlib.colors import Colormap, LinearSegmentedColormap
+from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
 from more_itertools import always_iterable
 
 # type aliases
@@ -95,20 +95,34 @@ def _register_mpl_cmap(cmap: Colormap) -> None:
 
 def register_colormap(
     name: str,
-    color_dict: ColorDict,
+    *,
+    color_dict: Optional[ColorDict] = None,
+    colors: Optional[np.ndarray] = None,
 ) -> Tuple[LinearSegmentedColormap, LinearSegmentedColormap]:
     name = prefix_name(name)
 
+    if color_dict is not None and colors is not None:
+        raise TypeError("Either color_dict or colors must be provided, but not both")
     # register to MPL
-    mpl_cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
+    if color_dict is not None:
+        mpl_cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
+    elif colors is not None:
+        mpl_cmap = ListedColormap(colors, name=name, N=256)
+    else:
+        raise TypeError("color_dict or colors must be provided")
     mpl_cmap_r = mpl_cmap.reversed()
     _register_mpl_cmap(mpl_cmap)
     _register_mpl_cmap(mpl_cmap_r)
 
     # return cmaps with unprefixed names for registration as importable objects
-    cmap = LinearSegmentedColormap(
-        name=unprefix_name(name), segmentdata=color_dict, N=256
-    )
+    if MPL_VERSION >= (3, 4):
+        cmap = mpl_cmap.copy()
+    else:
+        if color_dict is not None:
+            cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
+        elif colors is not None:
+            cmap = ListedColormap(colors, name=name, N=256)
+    cmap.name = unprefix_name(name)
     cmap_r = cmap.reversed()
 
     return cmap, cmap_r

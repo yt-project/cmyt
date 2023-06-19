@@ -1,32 +1,18 @@
 from importlib import import_module
 
-import numpy as np
-
-from cmyt.utils import ColorDict, cmyt_cmaps, register_colormap
-
-
-def _luts_to_cdict(luts: np.ndarray) -> ColorDict:
-    _vs = np.linspace(0, 1, 256)
-
-    return {
-        "red": np.transpose([_vs, luts[0], luts[0]]),
-        "green": np.transpose([_vs, luts[1], luts[1]]),
-        "blue": np.transpose([_vs, luts[2], luts[2]]),
-    }
-
+from cmyt.utils import cmyt_cmaps, register_colormap
 
 for name in cmyt_cmaps:
     # register to MPL
     mod = import_module(f"cmyt.colormaps.{name}")
     if hasattr(mod, "data"):
-        data = mod.data
+        cmap, cmap_r = register_colormap(name, color_dict=mod.data)
     elif hasattr(mod, "luts"):
-        data = _luts_to_cdict(mod.luts)
+        cmap, cmap_r = register_colormap(name, colors=mod.luts)
     else:
         raise RuntimeError(
             f"colormap module '{name}' doesn't contain necessary data for registration."
         )
-    cmap, cmap_r = register_colormap(name, data)
 
     globals()[cmap.name] = cmap
     globals()[cmap_r.name] = cmap_r
