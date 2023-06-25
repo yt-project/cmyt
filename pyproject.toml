@@ -27,7 +27,7 @@ keywords = [
 ]
 requires-python = ">=3.8"
 dependencies = [
-    "matplotlib>=3.2.0",
+    "matplotlib>=3.5.0",
     "numpy>=1.17.4",
 ]
 
