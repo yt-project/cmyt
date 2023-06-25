@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Dict, Final, Iterable, Literal, Optional, Tupl
 import matplotlib
 import numpy as np
 from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
-from more_itertools import always_iterable
 
 # type aliases
 
@@ -198,10 +197,7 @@ def create_cmap_overview(
     """
     import matplotlib.pyplot as plt
 
-    if subset is None:
-        subset = cmyt_cmaps
-
-    cmaps = sorted(prefix_name(_) for _ in always_iterable(subset))
+    cmaps = sorted(prefix_name(_) for _ in (subset or cmyt_cmaps))
     if not cmaps:
         raise ValueError(f"Received invalid or empty subset: {subset}")
 
