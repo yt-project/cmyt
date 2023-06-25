@@ -1,9 +1,8 @@
 import os
-import re
 import sys
 from typing import TYPE_CHECKING, Dict, Final, Iterable, Literal, Optional, Tuple
 
-import matplotlib
+import matplotlib as mpl
 import numpy as np
 from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
 
@@ -36,25 +35,6 @@ cmyt_cmaps = frozenset(
 )
 
 
-def version_tuple(version: str) -> Tuple[int, ...]:
-    elems = version.split(".")
-    if len(elems) > 3:
-        elems = elems[:3]
-
-    if not elems[-1].isnumeric():
-        # allow alpha/beta/release candidate versions
-        match = re.search(r"^\d+", elems[-1])
-        if match is None:
-            elems.pop()
-        else:
-            elems[-1] = match.group()
-
-    return tuple(int(_) for _ in elems)
-
-
-MPL_VERSION = version_tuple(matplotlib.__version__)
-
-
 def prefix_name(name: str) -> str:
     if not name.startswith(_CMYT_PREFIX):
         return f"{_CMYT_PREFIX}{name}"
@@ -78,20 +58,6 @@ def unprefix_name(name: str) -> str:
         return name
 
 
-def _register_mpl_cmap(cmap: Colormap) -> None:
-    """
-    An adapter for matplotlib that works transparently with
-    either API (historical and post 3.5.0) while dodging deprecation
-    warnings.
-    """
-    if MPL_VERSION >= (3, 5, 0):
-        matplotlib.colormaps.register(cmap)
-    else:
-        from matplotlib.cm import register_cmap
-
-        register_cmap(cmap=cmap)
-
-
 def register_colormap(
     name: str,
     *,
@@ -104,26 +70,19 @@ def register_colormap(
         raise TypeError("Either color_dict or colors must be provided, but not both")
     # register to MPL
     if color_dict is not None:
-        mpl_cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
+        cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
     elif colors is not None:
-        mpl_cmap = ListedColormap(colors, name=name, N=256)
+        cmap = ListedColormap(colors, name=name, N=256)
     else:
         raise TypeError("color_dict or colors must be provided")
-    mpl_cmap_r = mpl_cmap.reversed()
-    _register_mpl_cmap(mpl_cmap)
-    _register_mpl_cmap(mpl_cmap_r)
+
+    cmap_r = cmap.reversed()
+    mpl.colormaps.register(cmap)
+    mpl.colormaps.register(cmap_r)
 
     # return cmaps with unprefixed names for registration as importable objects
-    if MPL_VERSION >= (3, 4):
-        cmap = mpl_cmap.copy()
-    else:
-        if color_dict is not None:
-            cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
-        elif colors is not None:
-            cmap = ListedColormap(colors, name=name, N=256)
-    cmap.name = unprefix_name(name)
-    cmap_r = cmap.reversed()
-
+    cmap.name = unprefix_name(cmap.name)
+    cmap_r.name = unprefix_name(cmap_r.name)
     return cmap, cmap_r
 
 
