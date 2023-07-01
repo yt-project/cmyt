@@ -126,9 +126,15 @@ jobs:
   type-check:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        python-version:
+        # oldest and newest supported versions
+        - '3.8'
+        - '3.11'
     concurrency:
       # auto-cancel any in-progress job *on the same branch*
-      group: ${{ github.workflow }}-${{ github.ref }}-typecheck
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.python-version }}-typecheck
       cancel-in-progress: true
 
     steps:
@@ -138,10 +144,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
-        # run with oldest support python version
-        # so that we always get compatible versions of
-        # core dependencies at type-check time
-        python-version: '3.8'
+        python-version: ${{ matrix.python-version }}
 
     - name: Build
       run: |
