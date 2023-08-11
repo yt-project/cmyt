@@ -1,6 +1,16 @@
 import os
 import sys
-from typing import TYPE_CHECKING, Dict, Final, Iterable, Literal, Optional, Tuple
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Dict,
+    Final,
+    Iterable,
+    Literal,
+    Optional,
+    Sequence,
+    Tuple,
+)
 
 import matplotlib as mpl
 import numpy as np
@@ -13,9 +23,8 @@ if TYPE_CHECKING:
     from matplotlib.figure import Figure
 
 _CMYT_PREFIX: Final[str] = "cmyt."
-PrimaryColorName = Literal["blue", "green", "red"]
 
-ColorDict = Dict[PrimaryColorName, Iterable[Tuple[float, float, float]]]
+ColorDict = Dict[Literal["red", "green", "blue", "alpha"], Sequence[Tuple[float, ...]]]
 
 # this is used in cmyt.cm to programmatically import all cmaps
 cmyt_cmaps = frozenset(
@@ -63,12 +72,13 @@ def register_colormap(
     *,
     color_dict: Optional[ColorDict] = None,
     colors: Optional[np.ndarray] = None,
-) -> Tuple[LinearSegmentedColormap, LinearSegmentedColormap]:
+) -> Tuple[Colormap, Colormap]:
     name = prefix_name(name)
 
     if color_dict is not None and colors is not None:
         raise TypeError("Either color_dict or colors must be provided, but not both")
     # register to MPL
+    cmap: Colormap
     if color_dict is not None:
         cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
     elif colors is not None:
@@ -110,6 +120,7 @@ def get_rgb(cmap: Colormap) -> np.ndarray:
     # this is adapted from viscm 0.8
     from matplotlib.colors import ListedColormap
 
+    RGB: np.ndarray[Any, Any]
     if isinstance(cmap, ListedColormap) and cmap.N >= 100:
         RGB = np.asarray(cmap.colors)[:, :3]
     else:
