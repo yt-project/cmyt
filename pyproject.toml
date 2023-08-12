@@ -17,7 +17,6 @@ classifiers = [
     "Operating System :: POSIX :: AIX",
     "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
     "Topic :: Scientific/Engineering :: Visualization",
     "Typing :: Typed",
 ]
