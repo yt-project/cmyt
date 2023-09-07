@@ -16,18 +16,17 @@ jobs:
         os:
         - ubuntu-latest
         python-version:
-        - '3.8'
         - '3.9'
         - '3.10'
         - '3.11'
         include:
           # only test oldest and most recent Python on other platforms
         - os: macos-latest
-          python-version: '3.8'
+          python-version: '3.9'
         - os: macos-latest
           python-version: '3.11'
         - os: windows-latest
-          python-version: '3.8'
+          python-version: '3.9'
         - os: windows-latest
           python-version: '3.11'
     runs-on: ${{ matrix.os }}
@@ -61,7 +60,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.8'
+        python-version: '3.9'
     - name: Build library
       run: |
         python -m pip install --upgrade pip
@@ -130,7 +129,7 @@ jobs:
       matrix:
         python-version:
         # oldest and newest supported versions
-        - '3.8'
+        - '3.9'
         - '3.11'
     concurrency:
       # auto-cancel any in-progress job *on the same branch*

@@ -1,16 +1,7 @@
 import os
-import sys
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Dict,
-    Final,
-    Iterable,
-    Literal,
-    Optional,
-    Sequence,
-    Tuple,
-)
+import warnings
+from collections.abc import Iterable, Sequence
+from typing import TYPE_CHECKING, Any, Final, Literal, Optional
 
 import matplotlib as mpl
 import numpy as np
@@ -24,7 +15,7 @@ if TYPE_CHECKING:
 
 _CMYT_PREFIX: Final[str] = "cmyt."
 
-ColorDict = Dict[Literal["red", "green", "blue", "alpha"], Sequence[Tuple[float, ...]]]
+ColorDict = dict[Literal["red", "green", "blue", "alpha"], Sequence[tuple[float, ...]]]
 
 # this is used in cmyt.cm to programmatically import all cmaps
 cmyt_cmaps = frozenset(
@@ -59,12 +50,14 @@ def unprefix_name(name: str) -> str:
     >>> unprefix_name("arbre")
     'arbre'
     """
-    if sys.version_info >= (3, 9):
-        return name.removeprefix(_CMYT_PREFIX)
-    else:
-        if name.startswith(_CMYT_PREFIX):
-            return name[len(_CMYT_PREFIX) :]
-        return name
+    warnings.warn(
+        "cmyt.utils.unprefix_name is deprecated since version 1.4.0 "
+        "and will be removed in a future version. "
+        "Instead, use name.removeprefix('cmyt.')",
+        category=DeprecationWarning,
+        stacklevel=2,
+    )
+    return name.removeprefix(_CMYT_PREFIX)
 
 
 def register_colormap(
@@ -72,7 +65,7 @@ def register_colormap(
     *,
     color_dict: Optional[ColorDict] = None,
     colors: Optional[np.ndarray] = None,
-) -> Tuple[Colormap, Colormap]:
+) -> tuple[Colormap, Colormap]:
     name = prefix_name(name)
 
     if color_dict is not None and colors is not None:
@@ -91,8 +84,8 @@ def register_colormap(
     mpl.colormaps.register(cmap_r)
 
     # return cmaps with unprefixed names for registration as importable objects
-    cmap.name = unprefix_name(cmap.name)
-    cmap_r.name = unprefix_name(cmap_r.name)
+    cmap.name = cmap.name.removeprefix(_CMYT_PREFIX)
+    cmap_r.name = cmap_r.name.removeprefix(_CMYT_PREFIX)
     return cmap, cmap_r
 
 
@@ -184,7 +177,9 @@ def create_cmap_overview(
         for rgb, _ax in zip(RGBs, _axes):
             _ax.axis("off")
             show_cmap(_ax, rgb)
-        ax.text(ax.get_xlim()[1] * 1.02, 0, unprefix_name(name), fontsize=10)
+        ax.text(
+            ax.get_xlim()[1] * 1.02, 0, name.removeprefix(_CMYT_PREFIX), fontsize=10
+        )
 
     fig.tight_layout(h_pad=0.2)
     fig.subplots_adjust(top=0.9, bottom=0.05, right=0.85, left=0.05)
