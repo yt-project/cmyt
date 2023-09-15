@@ -94,7 +94,7 @@ graySCALE_CONVERSION_SPACE = "JCh"
 
 def to_grayscale(sRGB1: np.ndarray) -> np.ndarray:
     # this is adapted from viscm 0.8
-    from colorspacious import cspace_converter
+    from colorspacious import cspace_converter  # type: ignore[import]
 
     _sRGB1_to_JCh = cspace_converter("sRGB1", graySCALE_CONVERSION_SPACE)
     _JCh_to_sRGB1 = cspace_converter(graySCALE_CONVERSION_SPACE, "sRGB1")
