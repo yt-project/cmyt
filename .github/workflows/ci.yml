@@ -19,6 +19,7 @@ jobs:
         - '3.9'
         - '3.10'
         - '3.11'
+        - 3.12-dev
         include:
           # only test oldest and most recent Python on other platforms
         - os: macos-latest
