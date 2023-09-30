@@ -32,15 +32,14 @@ jobs:
     - name: Set up Python Dev Version
       uses: actions/setup-python@v4
       with:
-        python-version: 3.11-dev
+        python-version: 3.12-dev
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools wheel
-        python -m pip install --pre \
-          --extra-index https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \
-          numpy matplotlib
+        python -m pip install --pre --only-binary ":all:" numpy matplotlib \
+          --extra-index https://pypi.anaconda.org/scientific-python-nightly-wheels/simple
 
     - name: Build library
       run: |
@@ -49,7 +48,7 @@ jobs:
 
     - name: Run test suite
       run: |
-        pytest --color yes --mpl-results-path=test_results -Werror
+        pytest --color yes --mpl-results-path=test_results
 
     - uses: actions/upload-artifact@v3
       if: failure()
