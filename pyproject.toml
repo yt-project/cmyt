@@ -88,9 +88,7 @@ ignore_errors = true
 [tool.pytest.ini_options]
 filterwarnings = [
     "error",
-    # already patched (but not released) upstream:
-    # https://github.com/dateutil/dateutil/pull/1285
-    'ignore:datetime.datetime.utcfromtimestamp\(\) is deprecated and scheduled for removal in a future version:DeprecationWarning',
+    'ignore:datetime\.datetime\.utcfromtimestamp\(\) is deprecated:DeprecationWarning', # https://github.com/dateutil/dateutil/pull/1285
 ]
 addopts = "--doctest-modules"
 testpaths = ["tests"]

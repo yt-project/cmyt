@@ -19,17 +19,17 @@ jobs:
         - '3.9'
         - '3.10'
         - '3.11'
-        - 3.12-dev
+        - '3.12'
         include:
           # only test oldest and most recent Python on other platforms
         - os: macos-latest
           python-version: '3.9'
         - os: macos-latest
-          python-version: '3.11'
+          python-version: '3.12'
         - os: windows-latest
           python-version: '3.9'
         - os: windows-latest
-          python-version: '3.11'
+          python-version: '3.12'
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout Source
@@ -84,7 +84,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: 3.x
 
     - name: Build library
       run: |
@@ -131,7 +131,7 @@ jobs:
         python-version:
         # oldest and newest supported versions
         - '3.9'
-        - '3.11'
+        - '3.12'
     concurrency:
       # auto-cancel any in-progress job *on the same branch*
       group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.python-version }}-typecheck
