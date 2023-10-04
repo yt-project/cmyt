@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 
 import cmyt
-from cmyt.utils import cmyt_cmaps, prefix_name
+from cmyt._utils import cmyt_cmaps, prefix_name
 
 mpl_compare = pytest.mark.mpl_image_compare(
     savefig_kwargs={"bbox_inches": "tight"},
