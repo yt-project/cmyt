@@ -1,5 +1,4 @@
 import os
-import warnings
 from collections.abc import Iterable, Sequence
 from typing import TYPE_CHECKING, Any, Final, Literal, Optional
 
@@ -39,25 +38,6 @@ def prefix_name(name: str) -> str:
     if not name.startswith(_CMYT_PREFIX):
         return f"{_CMYT_PREFIX}{name}"
     return name
-
-
-def unprefix_name(name: str) -> str:
-    """
-    Examples
-    --------
-    >>> unprefix_name("cmyt.arbre")
-    'arbre'
-    >>> unprefix_name("arbre")
-    'arbre'
-    """
-    warnings.warn(
-        "cmyt._utils.unprefix_name is deprecated since version 1.4.0 "
-        "and will be removed in a future version. "
-        "Instead, use name.removeprefix('cmyt.')",
-        category=DeprecationWarning,
-        stacklevel=2,
-    )
-    return name.removeprefix(_CMYT_PREFIX)
 
 
 def register_colormap(
