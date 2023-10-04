@@ -1,6 +1,6 @@
 from importlib import import_module
 
-from cmyt.utils import cmyt_cmaps, register_colormap
+from cmyt._utils import cmyt_cmaps, register_colormap
 
 for name in cmyt_cmaps:
     # register to MPL

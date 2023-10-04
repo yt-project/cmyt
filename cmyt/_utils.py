@@ -51,7 +51,7 @@ def unprefix_name(name: str) -> str:
     'arbre'
     """
     warnings.warn(
-        "cmyt.utils.unprefix_name is deprecated since version 1.4.0 "
+        "cmyt._utils.unprefix_name is deprecated since version 1.4.0 "
         "and will be removed in a future version. "
         "Instead, use name.removeprefix('cmyt.')",
         category=DeprecationWarning,
