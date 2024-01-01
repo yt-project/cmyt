@@ -5,15 +5,15 @@ updates:
   schedule:
     interval: monthly
   groups:
-      actions:
-        patterns:
-        - '*'
+    actions:
+      patterns:
+      - '*'
 
 - package-ecosystem: github-actions
   directory: /.github/workflows
   schedule:
     interval: monthly
   groups:
-      actions:
-        patterns:
-        - '*'
+    actions:
+      patterns:
+      - '*'
