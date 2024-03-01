@@ -26,7 +26,7 @@ keywords = [
 requires-python = ">=3.9"
 dependencies = [
     "matplotlib>=3.5.0",
-    "numpy>=1.19.3",
+    "numpy>=1.20, <3",
 ]
 dynamic = ["version"]
 
