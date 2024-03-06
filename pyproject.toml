@@ -54,7 +54,7 @@ include-package-data = false
 [tool.setuptools.packages.find]
 namespaces = false
 
-[tool.ruff]
+[tool.ruff.lint]
 exclude = ["*__init__.py"]
 ignore = ["E501"]
 select = [
@@ -68,7 +68,7 @@ select = [
     "UP",  # pyupgrade
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 combine-as-imports = true
 
 [tool.mypy]
