@@ -9,10 +9,12 @@ on:
   schedule:
   # run this every Wednesday at 3 am UTC
   - cron: 0 3 * * 3
+  workflow_dispatch:
 
 jobs:
   tests:
     strategy:
+      fail-fast: false
       matrix:
         os:
         - ubuntu-latest
