@@ -1,2 +1,2 @@
-mypy==1.10.0
+mypy==1.10.1
 matplotlib>=3.8
