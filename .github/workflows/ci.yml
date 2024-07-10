@@ -54,8 +54,11 @@ jobs:
     - run: uv pip install --compile -r requirements/tests.txt
 
     - if: matrix.deps == 'minimal'
+      # 2021-11-16 is matplotlib 3.5.0's release date
       run: |
-        uv pip compile pyproject.toml --resolution=lowest-direct | uv pip install -r -
+        uv pip compile pyproject.toml \
+         --resolution=lowest-direct \
+         --exclude-newer '2021-11-16' | uv pip install -r -
 
     - name: Build library
       run: uv pip install .
