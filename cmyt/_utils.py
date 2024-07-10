@@ -9,8 +9,11 @@ from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
 # type aliases
 
 if TYPE_CHECKING:
+    from typing import cast
+
     from matplotlib.axes import Axes
     from matplotlib.figure import Figure
+    from numpy.typing import NDArray
 
 _CMYT_PREFIX: Final[str] = "cmyt."
 
@@ -146,6 +149,8 @@ def create_cmap_overview(
 
     # scale the image size by the number of cmaps
     fig, axes = plt.subplots(nrows=len(cmaps), figsize=(6, 2.6 * len(cmaps) / 10.0))
+    if TYPE_CHECKING:
+        axes = cast(NDArray, axes)
 
     for name, ax in zip(cmaps, axes):
         RGBs = [get_rgb(plt.get_cmap(name))]
