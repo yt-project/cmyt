@@ -41,8 +41,10 @@ jobs:
     - name: Install dependencies
       run: |
         uv pip install --upgrade setuptools wheel
-        uv pip install --pre --only-binary ":all:" numpy matplotlib \
-          --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple
+        uv pip install --pre --no-build numpy matplotlib \
+          --extra-index-url \
+          https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \
+          --index-strategy=unsafe-best-match
 
     - name: Build library
       # forcing bytecode compilation for colorspacious
