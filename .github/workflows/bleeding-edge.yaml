@@ -2,9 +2,7 @@ name: CI (bleeding edge)
 # this workflow is heavily inspired from pandas, see
 # https://github.com/pandas-dev/pandas/blob/master/.github/workflows/python-dev.yml
 
-# goals: check stability against
-# - dev version of Python, numpy, and matplotlib
-# - building with future pip default options
+# goal: check stability against dev versions of Python, numpy, and matplotlib
 
 on:
   push:
@@ -20,8 +18,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    name: Dev upstream
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-latest
+        - macos-latest
+        # excluding windows for lack of wheels at the tim of writing
+
+    runs-on: ${{ matrix.os }}
+    name: Test nightly dependencies
     timeout-minutes: 60
 
     steps:
@@ -32,15 +38,17 @@ jobs:
     - name: Set up Python Dev Version
       uses: actions/setup-python@v5
       with:
-        python-version: 3.12-dev
+        python-version: 3.13-dev
     - uses: yezz123/setup-uv@v4
       with:
-        uv-version: 0.2.18
+        uv-version: 0.2.29
         uv-venv: .venv
 
     - name: Install dependencies
+      # pre-installing kiwisolver (mpl dependency) because it doesn't have
+      # wheels at the time of writing so it collides with `--no-build`
       run: |
-        uv pip install --upgrade setuptools wheel
+        uv pip install kiwisolver
         uv pip install --pre --no-build numpy matplotlib \
           --extra-index-url \
           https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \
@@ -50,7 +58,7 @@ jobs:
       # forcing bytecode compilation for colorspacious
       # see https://github.com/astral-sh/uv/issues/4758
       run: |
-        uv pip install . --no-build-isolation
+        uv pip install .
         uv pip install --compile -r requirements/tests.txt
 
     - name: Run test suite
