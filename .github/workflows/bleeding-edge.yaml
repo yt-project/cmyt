@@ -39,16 +39,14 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: 3.13-dev
-    - uses: yezz123/setup-uv@v4
+    - uses: astral-sh/setup-uv@v2
       with:
-        uv-version: 0.2.29
-        uv-venv: .venv
+        enable-cache: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install dependencies
-      # pre-installing kiwisolver (mpl dependency) because it doesn't have
-      # wheels at the time of writing so it collides with `--no-build`
       run: |
-        uv pip install kiwisolver
+        uv venv
         uv pip install --pre --no-build numpy matplotlib \
           --extra-index-url \
           https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \
@@ -63,6 +61,7 @@ jobs:
 
     - name: Run test suite
       run: |
+        source .venv/bin/activate
         pytest --color yes --mpl-results-path=test_results
 
     - uses: actions/upload-artifact@v4
