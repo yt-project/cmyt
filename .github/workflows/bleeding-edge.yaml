@@ -42,7 +42,6 @@ jobs:
     - uses: astral-sh/setup-uv@v2
       with:
         enable-cache: true
-        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install dependencies
       run: |
