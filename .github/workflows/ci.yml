@@ -47,7 +47,6 @@ jobs:
     - uses: astral-sh/setup-uv@v2
       with:
         enable-cache: true
-        github-token: ${{ secrets.GITHUB_TOKEN }}
     # forcing bytecode compilation for colorspacious
     # see https://github.com/astral-sh/uv/issues/4758
     - run: |
@@ -87,7 +86,6 @@ jobs:
     - uses: astral-sh/setup-uv@v2
       with:
         enable-cache: true
-        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Build library
       # forcing bytecode compilation for colorspacious
       # see https://github.com/astral-sh/uv/issues/4758
@@ -149,7 +147,6 @@ jobs:
     - uses: astral-sh/setup-uv@v2
       with:
         enable-cache: true
-        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Run mypy
       run: |
         uvx --python ${{ matrix.python-version }} \
