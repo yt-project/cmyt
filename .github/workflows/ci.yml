@@ -44,7 +44,7 @@ jobs:
     steps:
     - name: Checkout Source
       uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v2
+    - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
     # forcing bytecode compilation for colorspacious
@@ -83,7 +83,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: 3.x
-    - uses: astral-sh/setup-uv@v2
+    - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
     - name: Build library
@@ -144,7 +144,7 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v2
+    - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
     - name: Run mypy
