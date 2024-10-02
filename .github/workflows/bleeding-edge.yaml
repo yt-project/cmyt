@@ -42,6 +42,9 @@ jobs:
     - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
+        cache-dependency-glob: |
+          **/requirements/tests.txt
+          **/pyproject.toml
 
     - name: Install dependencies
       run: |

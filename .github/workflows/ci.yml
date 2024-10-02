@@ -47,6 +47,10 @@ jobs:
     - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
+        cache-dependency-glob: |
+          **/requirements/tests.txt
+          **/pyproject.toml
+
     # forcing bytecode compilation for colorspacious
     # see https://github.com/astral-sh/uv/issues/4758
     - run: |
@@ -86,6 +90,10 @@ jobs:
     - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
+        cache-dependency-glob: |
+          **/requirements/tests.txt
+          **/pyproject.toml
+
     - name: Build library
       # forcing bytecode compilation for colorspacious
       # see https://github.com/astral-sh/uv/issues/4758
@@ -147,6 +155,9 @@ jobs:
     - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
+        cache-dependency-glob: |
+          **/requirements/typecheck.txt
+          **/pyproject.toml
     - name: Run mypy
       run: |
         uvx --python ${{ matrix.python-version }} \
