@@ -23,17 +23,18 @@ jobs:
         - '3.10'
         - '3.11'
         - '3.12'
+        - '3.13'
         include:
           # only test oldest and most recent Python on other platforms
         - os: macos-latest
           python-version: '3.9'
         - os: macos-latest
-          python-version: '3.12'
+          python-version: '3.13'
         - os: windows-latest
           python-version: '3.9'
           venv-loc: Script
         - os: windows-latest
-          python-version: '3.12'
+          python-version: '3.13'
           venv-loc: Script
         - os: ubuntu-20.04
           python-version: '3.9'
@@ -143,7 +144,7 @@ jobs:
         python-version:
         # oldest and newest supported versions
         - '3.9'
-        - '3.12'
+        - '3.13'
     concurrency:
       # auto-cancel any in-progress job *on the same branch*
       group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.python-version }}-typecheck
