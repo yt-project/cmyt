@@ -27,7 +27,7 @@ def example_data():
 def test_from_str(name, example_data):
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
     pname = prefix_name(name)
-    for cmap, ax in zip([pname, f"{pname}_r"], axes):
+    for cmap, ax in zip([pname, f"{pname}_r"], axes, strict=True):
         ax.set_title(cmap)
         im = ax.imshow(example_data, cmap=cmap)
         fig.colorbar(im, ax=ax)
@@ -38,7 +38,7 @@ def test_from_str(name, example_data):
 @pytest.mark.parametrize("name", cmyt_cmaps)
 def test_from_obj(name, example_data):
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
-    for cmap, ax in zip([name, f"{name}_r"], axes):
+    for cmap, ax in zip([name, f"{name}_r"], axes, strict=True):
         ax.set_title(cmap)
         im = ax.imshow(example_data, cmap=getattr(cmyt, cmap))
         fig.colorbar(im, ax=ax)
