@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import os
 from collections.abc import Iterable, Sequence
-from typing import TYPE_CHECKING, Any, Final, Literal, Optional
+from typing import TYPE_CHECKING, Literal
 
 import matplotlib as mpl
 import numpy as np
@@ -9,7 +11,7 @@ from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
 # type aliases
 
 if TYPE_CHECKING:
-    from typing import cast
+    from typing import Any, Final, TypeAlias, cast
 
     from matplotlib.axes import Axes
     from matplotlib.figure import Figure
@@ -17,7 +19,14 @@ if TYPE_CHECKING:
 
 _CMYT_PREFIX: Final[str] = "cmyt."
 
-ColorDict = dict[Literal["red", "green", "blue", "alpha"], Sequence[tuple[float, ...]]]
+Color: TypeAlias = Sequence[tuple[float, ...]]
+
+
+ColorDict: TypeAlias = dict[
+    Literal["red", "green", "blue", "alpha"],
+    Sequence[tuple[float, ...]],
+]
+
 
 # this is used in cmyt.cm to programmatically import all cmaps
 cmyt_cmaps = frozenset(
@@ -46,8 +55,8 @@ def prefix_name(name: str) -> str:
 def register_colormap(
     name: str,
     *,
-    color_dict: Optional[ColorDict] = None,
-    colors: Optional[np.ndarray] = None,
+    color_dict: ColorDict | None = None,
+    colors: np.ndarray | None = None,
 ) -> tuple[Colormap, Colormap]:
     name = prefix_name(name)
 
@@ -87,7 +96,7 @@ def to_grayscale(sRGB1: np.ndarray) -> np.ndarray:
     return np.clip(_JCh_to_sRGB1(JCh), 0, 1)
 
 
-def show_cmap(ax: "Axes", rgb: np.ndarray) -> None:
+def show_cmap(ax: Axes, rgb: np.ndarray) -> None:
     # this is adapted from viscm 0.8
     ax.imshow(rgb[np.newaxis, ...], aspect="auto")
 
@@ -107,10 +116,10 @@ def get_rgb(cmap: Colormap) -> np.ndarray:
 
 def create_cmap_overview(
     *,
-    subset: Optional[Iterable[str]] = None,
-    filename: Optional[str] = None,
+    subset: Iterable[str] | None = None,
+    filename: str | None = None,
     with_grayscale: bool = False,
-) -> "Figure":
+) -> Figure:
     # the name of this function is inspired from the cmasher library
     # but the actual content comes from yt
     """
@@ -152,14 +161,14 @@ def create_cmap_overview(
     if TYPE_CHECKING:
         axes = cast(NDArray, axes)
 
-    for name, ax in zip(cmaps, axes):
+    for name, ax in zip(cmaps, axes, strict=False):
         RGBs = [get_rgb(plt.get_cmap(name))]
         _axes = [ax]
         if with_grayscale:
             RGBs.append(to_grayscale(RGBs[0]))
             _axes.append(ax.inset_axes([0, 1, 0.999999, 0.3]))
 
-        for rgb, _ax in zip(RGBs, _axes):
+        for rgb, _ax in zip(RGBs, _axes, strict=False):
             _ax.axis("off")
             show_cmap(_ax, rgb)
         ax.text(

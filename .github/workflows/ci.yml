@@ -19,7 +19,6 @@ jobs:
         os:
         - ubuntu-latest
         python-version:
-        - '3.9'
         - '3.10'
         - '3.11'
         - '3.12'
@@ -27,17 +26,17 @@ jobs:
         include:
           # only test oldest and most recent Python on other platforms
         - os: macos-latest
-          python-version: '3.9'
+          python-version: '3.10'
         - os: macos-latest
           python-version: '3.13'
         - os: windows-latest
-          python-version: '3.9'
+          python-version: '3.10'
           venv-loc: Script
         - os: windows-latest
           python-version: '3.13'
           venv-loc: Script
         - os: ubuntu-20.04
-          python-version: '3.9'
+          python-version: '3.10'
           # 2022-03-27 is setuptool 61.2's release date
           install-args: --resolution=lowest-direct --exclude-newer '2022-03-27'
 
@@ -143,7 +142,7 @@ jobs:
       matrix:
         python-version:
         # oldest and newest supported versions
-        - '3.9'
+        - '3.10'
         - '3.13'
     concurrency:
       # auto-cancel any in-progress job *on the same branch*
