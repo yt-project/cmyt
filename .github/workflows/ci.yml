@@ -31,10 +31,8 @@ jobs:
           python-version: '3.13'
         - os: windows-latest
           python-version: '3.10'
-          venv-loc: Script
         - os: windows-latest
           python-version: '3.13'
-          venv-loc: Script
         - os: ubuntu-20.04
           python-version: '3.10'
           # 2023-09-15 is numpy 1.26.0's release date
@@ -48,30 +46,23 @@ jobs:
       with:
         enable-cache: true
         cache-dependency-glob: |
-          **/requirements/tests.txt
           **/pyproject.toml
 
-    # forcing bytecode compilation for colorspacious
-    # see https://github.com/astral-sh/uv/issues/4758
-    - run: |
-        uv venv --python ${{ matrix.python-version }}
-        uv pip install --compile -r requirements/tests.txt ${{ matrix.install-args }}
-
     - name: Build library
-      run: uv pip install . ${{ matrix.install-args }}
+      run: |
+        uv venv -p ${{ matrix.python-version }}
+        uv pip install . ${{ matrix.install-args }}
 
     - run: uv pip list
 
-    - name: Run test suite (UNIX)
-      if: matrix.os != 'windows-latest'
+    - name: Run test suite
+      shell: bash # for windows compat
+      # forcing bytecode compilation for colorspacious
+      # see https://github.com/astral-sh/uv/issues/4758
+      #
       run: |
-        source .venv/bin/activate
-        pytest --color yes -ra
-    - name: Run test suite (Windows)
-      if: matrix.os == 'windows-latest'
-      run: |
-        .venv/Scripts/activate
-        pytest --color yes -ra
+        uv run --no-editable --compile-bytecode --group test ${{ matrix.install-args }} \
+          pytest --color yes -ra
     - uses: actions/upload-artifact@v4
       if: failure()
       with:
@@ -83,40 +74,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.x
     - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
         cache-dependency-glob: |
-          **/requirements/tests.txt
           **/pyproject.toml
 
-    - name: Build library
+    - name: Run Image Tests
       # forcing bytecode compilation for colorspacious
       # see https://github.com/astral-sh/uv/issues/4758
       run: |
-        uv venv
-        uv pip install .
-        uv pip install --compile -r requirements/tests.txt
-
-    - name: Run Image Tests
-      run: |
-        source .venv/bin/activate
-        pytest --color=yes --mpl -m mpl_image_compare \
-               --mpl-generate-summary=html \
-               --mpl-results-path=pytest_mpl_results \
-               --mpl-baseline-path=tests/baseline
+        uv run -p 3.13 --no-editable --compile-bytecode --group test \
+          pytest --color=yes --mpl -m mpl_image_compare \
+                --mpl-generate-summary=html \
+                --mpl-results-path=pytest_mpl_results \
+                --mpl-baseline-path=tests/baseline
 
     - name: Generate new image baseline
       if: failure()
       run: |
-        source .venv/bin/activate
-        pytest --color=yes --mpl -m mpl_image_compare \
-               --mpl-generate-path=pytest_mpl_new_baseline \
-               --last-failed
+        uv run --no-editable --group test \
+          pytest --color=yes --mpl -m mpl_image_compare \
+                 --mpl-generate-path=pytest_mpl_new_baseline \
+                 --last-failed
 
     # always attempt to upload artifacts, even
     # (and especially) in case of failure.
@@ -156,10 +136,8 @@ jobs:
       with:
         enable-cache: true
         cache-dependency-glob: |
-          **/requirements/typecheck.txt
           **/pyproject.toml
     - name: Run mypy
       run: |
-        uvx --python ${{ matrix.python-version }} \
-          --with-requirements=requirements/typecheck.txt --with . \
+        uv run -p ${{ matrix.python-version }} --no-editable --group typecheck \
           mypy cmyt
