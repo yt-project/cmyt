@@ -1,9 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.2"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "cmyt"
+version = "2.0.0"
 description = "A collection of Matplotlib colormaps from the yt project"
 authors = [
     { name = "The yt project", email = "yt-dev@python.org" },
@@ -28,7 +29,6 @@ dependencies = [
     "matplotlib>=3.5.1",
     "numpy>=1.22.3, <3",
 ]
-dynamic = ["version"]
 
 [project.license]
 text = "BSD 3-Clause"
@@ -41,18 +41,6 @@ content-type = "text/markdown"
 Homepage = "https://yt-project.org/"
 Source = "https://github.com/yt-project/cmyt/"
 Tracker = "https://github.com/yt-project/cmyt/issues"
-
-[tool.setuptools.dynamic]
-version = {attr = "cmyt.__version__"}
-
-[tool.setuptools]
-license-files = [
-    "LICENSE",
-]
-include-package-data = false
-
-[tool.setuptools.packages.find]
-namespaces = false
 
 [tool.ruff.lint]
 exclude = ["*__init__.py"]
