@@ -23,8 +23,6 @@ jobs:
       matrix:
         os:
         - ubuntu-latest
-        - macos-latest
-        # excluding windows for lack of wheels at the tim of writing
 
     runs-on: ${{ matrix.os }}
     name: Test nightly dependencies
@@ -35,36 +33,29 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Set up Python Dev Version
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.13-dev
     - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
         cache-dependency-glob: |
-          **/requirements/tests.txt
           **/pyproject.toml
 
     - name: Install dependencies
       run: |
-        uv venv
+        uv venv -p 3.13
         uv pip install --pre --no-build numpy matplotlib \
           --extra-index-url \
           https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \
           --index-strategy=unsafe-best-match
 
     - name: Build library
+      run: uv pip install .
+
+    - name: Run test suite
       # forcing bytecode compilation for colorspacious
       # see https://github.com/astral-sh/uv/issues/4758
       run: |
-        uv pip install .
-        uv pip install --compile -r requirements/tests.txt
-
-    - name: Run test suite
-      run: |
-        source .venv/bin/activate
-        pytest --color yes --mpl-results-path=test_results
+        uv run --no-editable --compile-bytecode --group test \
+          pytest --color yes --mpl-results-path=test_results
 
     - uses: actions/upload-artifact@v4
       if: failure()

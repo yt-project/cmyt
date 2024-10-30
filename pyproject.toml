@@ -42,6 +42,16 @@ Homepage = "https://yt-project.org/"
 Source = "https://github.com/yt-project/cmyt/"
 Tracker = "https://github.com/yt-project/cmyt/issues"
 
+[dependency-groups]
+typecheck = [
+    "mypy>=1.5.1",
+]
+test = [
+    "colorspacious>=1.1.2",
+    "pytest-mpl>=0.13",
+    "pytest>=6.2.4",
+]
+
 [tool.ruff.lint]
 exclude = ["*__init__.py"]
 ignore = ["E501"]
