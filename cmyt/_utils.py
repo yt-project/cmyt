@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Literal
 import matplotlib as mpl
 import numpy as np
 from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
+from matplotlib.figure import Figure
 
 # type aliases
 
@@ -14,7 +15,6 @@ if TYPE_CHECKING:
     from typing import Any, Final, TypeAlias, cast
 
     from matplotlib.axes import Axes
-    from matplotlib.figure import Figure
     from numpy.typing import NDArray
 
 _CMYT_PREFIX: Final[str] = "cmyt."
@@ -150,19 +150,18 @@ def create_cmap_overview(
         colorful version. This flag requires matplotlib 3.0 or greater.
         Defaults to False.
     """
-    import matplotlib.pyplot as plt
-
     cmaps = sorted(prefix_name(_) for _ in (subset or cmyt_cmaps))
     if not cmaps:
         raise ValueError(f"Received invalid or empty subset: {subset}")
 
     # scale the image size by the number of cmaps
-    fig, axes = plt.subplots(nrows=len(cmaps), figsize=(6, 2.6 * len(cmaps) / 10.0))
+    fig = Figure(figsize=(6, 2.6 * len(cmaps) / 10.0))
+    axes = fig.subplots(nrows=len(cmaps))
     if TYPE_CHECKING:
         axes = cast(NDArray, axes)
 
     for name, ax in zip(cmaps, axes, strict=False):
-        RGBs = [get_rgb(plt.get_cmap(name))]
+        RGBs = [get_rgb(mpl.colormaps[name])]
         _axes = [ax]
         if with_grayscale:
             RGBs.append(to_grayscale(RGBs[0]))
