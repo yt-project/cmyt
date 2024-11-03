@@ -1,6 +1,7 @@
-import matplotlib.pyplot as plt
+import matplotlib as mpl
 import numpy as np
 import pytest
+from matplotlib.figure import Figure
 
 import cmyt
 from cmyt._utils import cmyt_cmaps, prefix_name
@@ -25,7 +26,8 @@ def example_data():
 @mpl_compare
 @pytest.mark.parametrize("name", cmyt_cmaps)
 def test_from_str(name, example_data):
-    fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+    fig = Figure(figsize=(12, 4))
+    axes = fig.subplots(ncols=2)
     pname = prefix_name(name)
     for cmap, ax in zip([pname, f"{pname}_r"], axes, strict=True):
         ax.set_title(cmap)
@@ -37,7 +39,8 @@ def test_from_str(name, example_data):
 @mpl_compare
 @pytest.mark.parametrize("name", cmyt_cmaps)
 def test_from_obj(name, example_data):
-    fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+    fig = Figure(figsize=(12, 4))
+    axes = fig.subplots(ncols=2)
     for cmap, ax in zip([name, f"{name}_r"], axes, strict=True):
         ax.set_title(cmap)
         im = ax.imshow(example_data, cmap=getattr(cmyt, cmap))
@@ -48,4 +51,4 @@ def test_from_obj(name, example_data):
 @pytest.mark.parametrize("name", cmyt_cmaps)
 def test_cmap_name_attr(name):
     assert getattr(cmyt, name).name == name
-    assert plt.get_cmap(f"cmyt.{name}").name == prefix_name(name)
+    assert mpl.colormaps[f"cmyt.{name}"].name == prefix_name(name)
