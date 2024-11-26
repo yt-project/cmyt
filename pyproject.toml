@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cmyt"
-version = "2.0.0"
+version = "2.0.1"
 description = "A collection of Matplotlib colormaps from the yt project"
 authors = [
     { name = "The yt project", email = "yt-dev@python.org" },
@@ -50,6 +50,13 @@ test = [
     "colorspacious>=1.1.2",
     "pytest-mpl>=0.13",
     "pytest>=6.2.4",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    ".*",  # exclude dot files (.gitignore is still included)
+    "doc",
+    "tests",
 ]
 
 [tool.ruff.lint]
