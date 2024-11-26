@@ -67,7 +67,8 @@ def register_colormap(
     if color_dict is not None:
         cmap = LinearSegmentedColormap(name=name, segmentdata=color_dict, N=256)
     elif colors is not None:
-        cmap = ListedColormap(colors, name=name, N=256)
+        assert len(colors) == 256
+        cmap = ListedColormap(colors, name=name)
     else:
         raise TypeError("color_dict or colors must be provided")
 
