@@ -41,8 +41,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout Source
-      uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v3
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a # v4.2.0
       with:
         enable-cache: true
         cache-dependency-glob: |
@@ -63,7 +63,7 @@ jobs:
       run: |
         uv run --no-editable --compile-bytecode --group test ${{ matrix.install-args }} \
           pytest --color yes -ra
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
       if: failure()
       with:
         name: test_results
@@ -73,8 +73,8 @@ jobs:
     name: Image tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v3
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a # v4.2.0
       with:
         enable-cache: true
         cache-dependency-glob: |
@@ -102,14 +102,14 @@ jobs:
     # (and especially) in case of failure.
     - name: Upload pytest-mpl report
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
       with:
         name: cmyt_pytest_mpl_results
         path: pytest_mpl_results/*
 
     - name: Upload pytest-mpl baseline
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
       with:
         name: cmyt_pytest_mpl_new_baseline
         path: pytest_mpl_new_baseline/*
@@ -131,8 +131,8 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v3
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a # v4.2.0
       with:
         enable-cache: true
         cache-dependency-glob: |
