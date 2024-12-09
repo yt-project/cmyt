@@ -35,20 +35,13 @@ jobs:
 
     - uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a # v4.2.0
       with:
-        enable-cache: true
-        cache-dependency-glob: |
-          **/pyproject.toml
+        python-version: '3.13'
 
-    - name: Install dependencies
+    - name: Configure uv
       run: |
-        uv venv -p 3.13
-        uv pip install --pre --no-build numpy matplotlib \
-          --extra-index-url \
-          https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \
-          --index-strategy=unsafe-best-match
-
-    - name: Build library
-      run: uv pip install .
+        echo "UV_PRERELEASE=allow" >> $GITHUB_ENV
+        echo "UV_EXTRA_INDEX_URL=https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" >> $GITHUB_ENV
+        echo "UV_INDEX_STRATEGY=unsafe-best-match" >> $GITHUB_ENV
 
     - name: Run test suite
       # forcing bytecode compilation for colorspacious

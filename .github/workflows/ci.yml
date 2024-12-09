@@ -44,25 +44,18 @@ jobs:
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a # v4.2.0
       with:
-        enable-cache: true
-        cache-dependency-glob: |
-          **/pyproject.toml
-
-    - name: Build library
-      run: |
-        uv venv -p ${{ matrix.python-version }}
-        uv pip install . ${{ matrix.install-args }}
-
-    - run: uv pip list
+        python-version: ${{ matrix.python-version }}
 
     - name: Run test suite
       shell: bash # for windows compat
       # forcing bytecode compilation for colorspacious
       # see https://github.com/astral-sh/uv/issues/4758
-      #
+      # Cannot use --frozen here because it overrides options like --resolution
       run: |
-        uv run --no-editable --compile-bytecode --group test ${{ matrix.install-args }} \
+        uv run --no-editable --compile-bytecode \
+          --group test ${{ matrix.install-args }} \
           pytest --color yes -ra
+
     - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
       if: failure()
       with:
@@ -76,15 +69,13 @@ jobs:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a # v4.2.0
       with:
-        enable-cache: true
-        cache-dependency-glob: |
-          **/pyproject.toml
+        python-version: '3.13'
 
     - name: Run Image Tests
       # forcing bytecode compilation for colorspacious
       # see https://github.com/astral-sh/uv/issues/4758
       run: |
-        uv run -p 3.13 --no-editable --compile-bytecode --group test \
+        uv run --frozen --no-editable --compile-bytecode --group test \
           pytest --color=yes --mpl -m mpl_image_compare \
                 --mpl-generate-summary=html \
                 --mpl-results-path=pytest_mpl_results \
@@ -93,7 +84,7 @@ jobs:
     - name: Generate new image baseline
       if: failure()
       run: |
-        uv run --no-editable --group test \
+        uv run --frozen --no-editable --group test \
           pytest --color=yes --mpl -m mpl_image_compare \
                  --mpl-generate-path=pytest_mpl_new_baseline \
                  --last-failed
@@ -134,10 +125,7 @@ jobs:
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a # v4.2.0
       with:
-        enable-cache: true
-        cache-dependency-glob: |
-          **/pyproject.toml
+        python-version: ${{ matrix.python-version }}
+
     - name: Run mypy
-      run: |
-        uv run -p ${{ matrix.python-version }} --no-editable --group typecheck \
-          mypy cmyt
+      run: uv run --frozen --no-editable --group typecheck mypy cmyt
