@@ -161,14 +161,14 @@ def create_cmap_overview(
     if TYPE_CHECKING:
         axes = cast(NDArray, axes)
 
-    for name, ax in zip(cmaps, axes, strict=False):
+    for name, ax in zip(cmaps, axes, strict=True):
         RGBs = [get_rgb(mpl.colormaps[name])]
         _axes = [ax]
         if with_grayscale:
             RGBs.append(to_grayscale(RGBs[0]))
             _axes.append(ax.inset_axes([0, 1, 0.999999, 0.3]))
 
-        for rgb, _ax in zip(RGBs, _axes, strict=False):
+        for rgb, _ax in zip(RGBs, _axes, strict=True):
             _ax.axis("off")
             show_cmap(_ax, rgb)
         ax.text(
