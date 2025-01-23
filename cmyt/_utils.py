@@ -12,7 +12,7 @@ from matplotlib.figure import Figure
 # type aliases
 
 if TYPE_CHECKING:
-    from typing import Any, Final, TypeAlias, cast
+    from typing import Final, TypeAlias, cast
 
     from matplotlib.axes import Axes
     from numpy.typing import NDArray
@@ -56,7 +56,7 @@ def register_colormap(
     name: str,
     *,
     color_dict: ColorDict | None = None,
-    colors: np.ndarray | None = None,
+    colors: NDArray[np.floating] | None = None,
 ) -> tuple[Colormap, Colormap]:
     name = prefix_name(name)
 
@@ -85,7 +85,7 @@ def register_colormap(
 graySCALE_CONVERSION_SPACE = "JCh"
 
 
-def to_grayscale(sRGB1: np.ndarray) -> np.ndarray:
+def to_grayscale(sRGB1: NDArray[np.floating]) -> NDArray[np.floating]:
     # this is adapted from viscm 0.8
     from colorspacious import cspace_converter  # type: ignore
 
@@ -97,22 +97,22 @@ def to_grayscale(sRGB1: np.ndarray) -> np.ndarray:
     return np.clip(_JCh_to_sRGB1(JCh), 0, 1)
 
 
-def show_cmap(ax: Axes, rgb: np.ndarray) -> None:
+def show_cmap(ax: Axes, rgb: NDArray[np.floating]) -> None:
     # this is adapted from viscm 0.8
     ax.imshow(rgb[np.newaxis, ...], aspect="auto")
 
 
-def get_rgb(cmap: Colormap) -> np.ndarray:
+def get_rgb(cmap: Colormap) -> NDArray[np.floating]:
     # this is adapted from viscm 0.8
     from matplotlib.colors import ListedColormap
 
-    RGB: np.ndarray[Any, Any]
+    rgb: NDArray[np.floating]
     if isinstance(cmap, ListedColormap) and cmap.N >= 100:
-        RGB = np.asarray(cmap.colors)[:, :3]
+        rgb = np.asarray(cmap.colors)[:, :3]
     else:
         x = np.linspace(0, 1, 155)
-        RGB = cmap(x)[:, :3]
-    return RGB
+        rgb = cmap(x)[:, :3]
+    return rgb
 
 
 def create_cmap_overview(
@@ -159,7 +159,7 @@ def create_cmap_overview(
     fig = Figure(figsize=(6, 2.6 * len(cmaps) / 10.0))
     axes = fig.subplots(nrows=len(cmaps))
     if TYPE_CHECKING:
-        axes = cast(NDArray, axes)
+        axes = cast(NDArray[np.floating], axes)
 
     for name, ax in zip(cmaps, axes, strict=False):
         RGBs = [get_rgb(mpl.colormaps[name])]
