@@ -12,7 +12,7 @@ from matplotlib.figure import Figure
 # type aliases
 
 if TYPE_CHECKING:
-    from typing import Final, TypeAlias, cast
+    from typing import Final, TypeAlias
 
     from matplotlib.axes import Axes
     from numpy.typing import NDArray
@@ -156,17 +156,19 @@ def create_cmap_overview(
         raise ValueError(f"Received invalid or empty subset: {subset}")
 
     # scale the image size by the number of cmaps
-    fig = Figure(figsize=(6, 2.6 * len(cmaps) / 10.0))
-    axes = fig.subplots(nrows=len(cmaps))
-    if TYPE_CHECKING:
-        axes = cast(NDArray[np.floating], axes)
+    fig = Figure(figsize=(6, 0.26 * len(cmaps)))
+    axes: list[Axes]
+    if len(cmaps) == 1:
+        axes = [fig.subplots()]
+    else:
+        axes = list(fig.subplots(nrows=len(cmaps)))
 
     for name, ax in zip(cmaps, axes, strict=True):
         RGBs = [get_rgb(mpl.colormaps[name])]
         _axes = [ax]
         if with_grayscale:
             RGBs.append(to_grayscale(RGBs[0]))
-            _axes.append(ax.inset_axes([0, 1, 0.999999, 0.3]))
+            _axes.append(ax.inset_axes((0, 1, 0.999999, 0.3)))
 
         for rgb, _ax in zip(RGBs, _axes, strict=True):
             _ax.axis("off")
@@ -175,7 +177,8 @@ def create_cmap_overview(
             ax.get_xlim()[1] * 1.02, 0, name.removeprefix(_CMYT_PREFIX), fontsize=10
         )
 
-    fig.tight_layout(h_pad=0.2)
+    if len(cmaps) > 1:
+        fig.tight_layout(h_pad=0.2)
     fig.subplots_adjust(top=0.9, bottom=0.05, right=0.85, left=0.05)
     if filename is not None:
         fig.savefig(os.fspath(filename), dpi=200)
