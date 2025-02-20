@@ -46,15 +46,17 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    # install the package without constaints first so build-time requirements
+    # are not affected by install-args
+    - run: uv sync --no-editable
+
+    # forcing bytecode compilation for colorspacious
+    # see https://github.com/astral-sh/uv/issues/4758
+    # Cannot use --frozen here because it overrides options like --resolution
+    - run: uv sync --group test --compile-bytecode --no-install-project --inexact ${{ matrix.install-args }}
+
     - name: Run test suite
-      shell: bash # for windows compat
-      # forcing bytecode compilation for colorspacious
-      # see https://github.com/astral-sh/uv/issues/4758
-      # Cannot use --frozen here because it overrides options like --resolution
-      run: |
-        uv run --no-editable --compile-bytecode \
-          --group test ${{ matrix.install-args }} \
-          pytest --color yes -ra
+      run: uv run --no-sync pytest --color yes -ra
 
     - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
       if: failure()

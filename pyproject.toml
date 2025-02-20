@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["flit_core >=3.11,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "cmyt"
@@ -9,11 +9,12 @@ description = "A collection of Matplotlib colormaps from the yt project"
 authors = [
     { name = "The yt project", email = "yt-dev@python.org" },
 ]
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Framework :: Matplotlib",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: POSIX :: AIX",
     "Operating System :: POSIX :: Linux",
@@ -29,9 +30,6 @@ dependencies = [
     "matplotlib>=3.8.0",
     "numpy>=1.26.0, <3",
 ]
-
-[project.license]
-text = "BSD 3-Clause"
 
 [project.readme]
 file = "README.md"
@@ -50,13 +48,6 @@ test = [
     "colorspacious>=1.1.2",
     "pytest-mpl>=0.13",
     "pytest>=6.2.4",
-]
-
-[tool.hatch.build.targets.sdist]
-exclude = [
-    ".*",  # exclude dot files (.gitignore is still included)
-    "doc",
-    "tests",
 ]
 
 [tool.ruff.lint]
