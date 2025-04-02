@@ -33,7 +33,7 @@ jobs:
           python-version: '3.10'
         - os: windows-latest
           python-version: '3.13'
-        - os: ubuntu-20.04
+        - os: ubuntu-22.04
           python-version: '3.10'
           # 2023-09-15 is numpy 1.26.0's release date
           install-args: --resolution=lowest-direct --exclude-newer '2023-09-16'
