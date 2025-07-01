@@ -35,7 +35,8 @@ jobs:
 
     - uses: astral-sh/setup-uv@bd01e18f51369d5a26f1651c3cb451d3417e3bba # v6.3.1
       with:
-        python-version: '3.13'
+        python-version: '3.14'
+        enable-cache: false
 
     - name: Configure uv
       run: |
@@ -43,12 +44,19 @@ jobs:
         echo "UV_INDEX=https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" >> $GITHUB_ENV
         echo "UV_INDEX_STRATEGY=unsafe-best-match" >> $GITHUB_ENV
 
+
+    - run: |
+        uv lock --upgrade --no-build
+        # this additional step is needed as long as our requires-python
+        # (currently >=3.10) is lower than numpy's (currently >=3.11) or matplotlib's (currently >=3.11)
+        uv lock -P numpy -P matplotlib
+        # forcing bytecode compilation for colorspacious
+        # see https://github.com/astral-sh/uv/issues/4758
+        uv sync --no-editable --group test --compile-bytecode
+
     - name: Run test suite
-      # forcing bytecode compilation for colorspacious
-      # see https://github.com/astral-sh/uv/issues/4758
       run: |
-        uv run --no-editable --compile-bytecode --group test \
-          pytest --color yes --mpl-results-path=test_results
+        uv run --no-sync pytest --color yes --mpl-results-path=test_results
 
     - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       if: failure()
