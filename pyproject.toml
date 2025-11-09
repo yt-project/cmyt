@@ -47,7 +47,16 @@ typecheck = [
 test = [
     "colorspacious>=1.1.2",
     "pytest-mpl>=0.13",
-    "pytest>=6.2.4",
+    "pytest>=9.0.0",
+]
+
+[tool.uv]
+no-build-package = [
+    "numpy",
+    "matplotlib",
+    "pillow",
+    "contourpy",
+    "kiwisolver",
 ]
 
 [tool.ruff.lint]
@@ -82,10 +91,12 @@ module = "tests.*"
 disallow_untyped_defs = true
 ignore_errors = true
 
-[tool.pytest.ini_options]
+[tool.pytest]
+minversion = "9.0"
+strict = true
+addopts = ["-ra", "--doctest-modules"]
 filterwarnings = [
     "error",
     'ignore:datetime\.datetime\.utcfromtimestamp\(\) is deprecated:DeprecationWarning', # https://github.com/dateutil/dateutil/pull/1285
 ]
-addopts = "--doctest-modules"
 testpaths = ["tests"]

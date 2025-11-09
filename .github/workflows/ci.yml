@@ -36,8 +36,7 @@ jobs:
           python-version: '3.14'
         - os: ubuntu-22.04
           python-version: 3.10.0
-          # 2023-09-15 is numpy 1.26.0's release date
-          install-args: --resolution=lowest-direct --exclude-newer '2023-09-16'
+          install-args: --resolution=lowest
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -57,7 +56,7 @@ jobs:
     - run: uv sync --group test --compile-bytecode --no-install-project --inexact ${{ matrix.install-args }}
 
     - name: Run test suite
-      run: uv run --no-sync pytest --color yes -ra
+      run: uv run --no-sync pytest --color yes
 
     - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
       if: failure()
