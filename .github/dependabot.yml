@@ -17,3 +17,7 @@ updates:
     interval: quarterly
   cooldown:
     default-days: 7
+  groups:
+    patches:
+      update-types:
+      - patch
