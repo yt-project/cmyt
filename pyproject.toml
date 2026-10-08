@@ -52,8 +52,11 @@ test = [
 
 [tool.uv]
 no-build-package = [
-    "numpy",
+    "ast-serialize",
+    "librt",
     "matplotlib",
+    "mypy",
+    "numpy",
     "pillow",
     "contourpy",
     "kiwisolver",
@@ -78,7 +81,6 @@ select = [
 combine-as-imports = true
 
 [tool.mypy]
-python_version = "3.11"
 warn_unused_configs = true
 warn_unused_ignores = true
 warn_unreachable = true

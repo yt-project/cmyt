@@ -23,16 +23,17 @@ jobs:
         - '3.12'
         - '3.13'
         - '3.14'
+        - '3.15'
         include:
           # only test oldest and most recent Python on other platforms
         - os: macos-latest
           python-version: '3.11'
         - os: macos-latest
-          python-version: '3.14'
+          python-version: '3.15'
         - os: windows-latest
           python-version: '3.11'
         - os: windows-latest
-          python-version: '3.14'
+          python-version: '3.15'
         - os: ubuntu-22.04
           python-version: '3.11'
           install-args: --resolution=lowest
@@ -118,7 +119,7 @@ jobs:
         python-version:
         # oldest and newest supported versions
         - '3.11'
-        - '3.14'
+        - '3.15'
     concurrency:
       # auto-cancel any in-progress job *on the same branch*
       group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.python-version }}-typecheck
