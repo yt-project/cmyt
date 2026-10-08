@@ -19,7 +19,6 @@ jobs:
         os:
         - ubuntu-latest
         python-version:
-        - '3.10'
         - '3.11'
         - '3.12'
         - '3.13'
@@ -27,15 +26,15 @@ jobs:
         include:
           # only test oldest and most recent Python on other platforms
         - os: macos-latest
-          python-version: '3.10'
+          python-version: '3.11'
         - os: macos-latest
           python-version: '3.14'
         - os: windows-latest
-          python-version: '3.10'
+          python-version: '3.11'
         - os: windows-latest
           python-version: '3.14'
         - os: ubuntu-22.04
-          python-version: 3.10.0
+          python-version: '3.11'
           install-args: --resolution=lowest
 
     runs-on: ${{ matrix.os }}
@@ -56,7 +55,10 @@ jobs:
     - run: uv sync --group test --compile-bytecode --no-install-project --inexact ${{ matrix.install-args }}
 
     - name: Run test suite
-      run: uv run --no-sync pytest --color yes
+      shell: bash
+      run: |
+        uv run --no-sync pytest --color yes \
+          ${{ case( contains( matrix.install-args , '--resolution=lowest' ) , '-Wdefault' , '' ) }}
 
     - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       if: failure()
@@ -115,8 +117,8 @@ jobs:
       matrix:
         python-version:
         # oldest and newest supported versions
-        - '3.10'
-        - '3.13'
+        - '3.11'
+        - '3.14'
     concurrency:
       # auto-cancel any in-progress job *on the same branch*
       group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.python-version }}-typecheck
