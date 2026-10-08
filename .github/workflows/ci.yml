@@ -55,7 +55,10 @@ jobs:
     - run: uv sync --group test --compile-bytecode --no-install-project --inexact ${{ matrix.install-args }}
 
     - name: Run test suite
-      run: uv run --no-sync pytest --color yes
+      shell: bash
+      run: |
+        uv run --no-sync pytest --color yes \
+          ${{ case( contains( matrix.install-args , '--resolution=lowest' ) , -Wdefault , '' ) }}
 
     - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       if: failure()
