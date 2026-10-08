@@ -48,7 +48,7 @@ jobs:
     - run: |
         uv lock --upgrade --no-build
         # this additional step is needed as long as our requires-python
-        # (currently >=3.10) is lower than numpy's (currently >=3.11) or matplotlib's (currently >=3.11)
+        # (currently >=3.11) is lower than numpy's (currently >=3.12) or matplotlib's (currently >=3.12)
         uv lock -P numpy -P matplotlib
         # forcing bytecode compilation for colorspacious
         # see https://github.com/astral-sh/uv/issues/4758
