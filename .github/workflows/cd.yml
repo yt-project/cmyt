@@ -8,6 +8,11 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/cmyt
+    permissions:
+      id-token: write
     steps:
     - name: Checkout Source
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -17,6 +22,3 @@ jobs:
     - name: Publish package to PyPI
       if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
       uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
-      with:
-        user: __token__
-        password: ${{ secrets.pypi_token }}
